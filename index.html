@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#37233d">
+  <meta name="description" content="Um espaço de estudo dos pontos cantados, organizado por Orixá e linha de trabalho.">
+  <title>Pontos TU7VD | Caderno de estudo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Pontos TU7VD início">
+      <img class="brand-mark" src="assets/logo-tu7vd.jpeg" alt="Emblema do Templo de Umbanda Vibrações Divinas">
+      <span><b>Pontos</b><small>TU7VD · caderno de estudo</small></span>
+    </a>
+    <nav class="top-actions" aria-label="Ações principais">
+      <button class="text-button" id="favorites-toggle" type="button">♡ <span>Meus favoritos</span></button>
+      <button class="text-button admin-open" id="admin-open" type="button">⚙ <span>Administrador</span></button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-content">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> MEMÓRIA, CANTO E APRENDIZADO</p>
+        <h1>Um ponto de cada vez.</h1>
+        <p class="hero-copy">Encontre, escute e estude os pontos cantados. Um caderno vivo para organizar o aprendizado da nossa casa.</p>
+        <div class="hero-meta"><span class="meta-icon">♫</span><span id="point-count">0 pontos de referência</span><span class="meta-divider">·</span><span id="category-count">0 categorias</span></div>
+      </div>
+      <img class="hero-art" src="assets/hero-orixas-atabaques.png" alt="Orixás dançando ao redor de atabaques">
+    </section>
+
+    <section class="catalog-shell" aria-label="Catálogo de pontos">
+      <div class="catalog-heading">
+        <div><p class="section-kicker">CADERNO DE PONTOS</p><h2>Escolha por onde começar</h2></div>
+        <div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Buscar ponto ou categoria..." aria-label="Buscar ponto ou categoria"><kbd>⌘ K</kbd></div>
+      </div>
+      <div class="catalog-layout">
+        <aside class="category-sidebar" aria-label="Menu de categorias">
+          <div class="sidebar-heading"><span>NAVEGAR</span><button class="clear-filter" id="clear-filter" type="button" hidden>Limpar</button></div>
+          <div id="category-filters" class="category-filters" aria-label="Filtrar por Orixá ou linha"></div>
+        </aside>
+        <section class="results-pane" aria-label="Pontos encontrados">
+          <div class="results-bar"><span id="results-label">Todos os pontos</span><span id="results-count"></span></div>
+          <div id="point-grid" class="point-grid"></div>
+          <div id="empty-state" class="empty-state" hidden><span>⌕</span><h3>Nenhum ponto encontrado</h3><p>Tente outra busca ou escolha uma categoria diferente.</p></div>
+        </section>
+      </div>
+    </section>
+    <aside class="note"><span class="note-icon">✳</span><p><b>Referências para estudo.</b> As versões, letras e melodias podem variar entre terreiros. Confirme cada ponto com a orientação do TU7VD antes de incluí-lo na lista da casa.</p></aside>
+  </main>
+  <footer><img class="footer-mark" src="assets/logo-tu7vd.jpeg" alt=""><span>Feito para aprender, lembrar e cantar junto.</span><span class="footer-right">TU7VD · Caderno de estudo</span></footer>
+
+  <dialog id="point-dialog" class="point-dialog">
+    <form method="dialog" class="dialog-close-row"><button class="icon-button close-dialog" aria-label="Fechar">×</button></form>
+    <div class="dialog-content" id="dialog-content"></div>
+  </dialog>
+  <dialog id="admin-dialog" class="point-dialog admin-dialog">
+    <form method="dialog" class="dialog-close-row"><button class="icon-button close-dialog" aria-label="Fechar">×</button></form>
+    <div class="dialog-content" id="admin-content">
+      <span class="tag"><i class="tag-dot"></i>Área restrita</span>
+      <h2>Administrador</h2>
+      <p class="dialog-subtitle">Entre com a conta autorizada do templo para editar o catálogo.</p>
+      <div id="admin-setup-message" class="admin-message" hidden></div>
+      <form id="admin-login-form" class="admin-login-form">
+        <label for="admin-email">E-mail</label><input id="admin-email" type="email" autocomplete="username" required>
+        <label for="admin-password">Senha</label><input id="admin-password" type="password" autocomplete="current-password" required>
+        <button class="save-button" type="submit">Entrar</button>
+      </form>
+      <div id="admin-tools" hidden>
+        <p id="admin-session-label" class="admin-session-label"></p>
+        <label class="lyrics-label" for="admin-point-select">Escolha um ponto para editar</label>
+        <select id="admin-point-select" class="admin-select"></select>
+        <div class="dialog-actions">
+          <button class="save-button" id="admin-edit-point" type="button">Editar ponto</button>
+          <button class="action-link" id="admin-new-point" type="button">＋ Novo ponto</button>
+          <button class="action-link" id="import-points-button" type="button">⇧ Importar pontos (.txt / .docx)</button>
+          <a class="action-link" href="conversor.html" target="_blank" rel="noopener">Preparar v?rios arquivos</a>
+          <input id="import-points-file" type="file" accept=".txt,.docx,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+          <button class="action-link" id="download-all-lyrics" type="button">⇩ Baixar letras .txt</button>
+          <button class="action-link" id="export-json" type="button">Exportar catálogo</button>
+          <button class="action-link" id="admin-logout" type="button">Sair</button>
+        </div>
+        <section id="import-points-panel" class="import-points-panel" hidden>
+          <p class="import-help">Selecione um arquivo com um ou mais pontos. Para vários pontos, use <b>Ponto:</b>, <b>Categoria:</b> (ou <b>Linha:</b>), <b>Grupo:</b>, <b>Letra:</b> e opcionalmente <b>Fonte:</b>, <b>Vídeo:</b> e <b>Áudio:</b>; separe cada ponto com <b>---</b>. Pontos novos também oferecem buscas no YouTube e Spotify para você escolher e cadastrar a gravação correta.</p>
+          <div id="import-points-preview" class="import-points-preview" aria-live="polite"></div>
+          <div class="dialog-actions">
+            <button class="save-button" id="import-points-save" type="button" disabled>Confirmar importação</button>
+            <button class="action-link" id="import-points-cancel" type="button">Cancelar</button>
+          </div>
+        </section>
+      </div>
+      <div class="saved-indicator" id="admin-feedback" role="status"></div>
+    </div>
+  </dialog>
+  <script src="supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
