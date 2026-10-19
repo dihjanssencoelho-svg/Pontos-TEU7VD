@@ -43,3 +43,8 @@ Abra `conversor.html` no navegador ou use **Preparar vários arquivos** na área
 Para reconhecer vários pontos no mesmo documento, separe-os com uma linha de pelo menos três hífens (`---`), sublinhados, sinais de igual ou asteriscos. A primeira linha de cada bloco será o título; as linhas seguintes serão a letra. Sem separadores, o arquivo será interpretado como um único ponto. Confira e edite a prévia antes de baixar `pontos-para-importacao.txt`; depois, importe esse arquivo TXT pela área do administrador.
 
 O conversor organiza o texto, mas não atribui gravações automaticamente. Consulte o catálogo do TUEG como referência, confira a versão com a casa e cadastre um endereço direto de áudio.
+
+
+## Player do YouTube
+
+O administrador pode cadastrar o link do vídeo do YouTube ao editar um ponto. Ao abrir o ponto, a aplicação incorpora o player junto à letra. São aceitos links `youtube.com/watch`, `youtu.be`, `shorts`, `live` e `embed`. A aplicação não extrai nem baixa o áudio; a reprodução usa o player do YouTube.
