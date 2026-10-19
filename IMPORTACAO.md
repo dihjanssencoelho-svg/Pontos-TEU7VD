@@ -12,7 +12,7 @@ Categoria: Oxalá
 Grupo: Orixás
 Fonte: https://exemplo.org/referencia
 Vídeo: https://www.youtube.com/watch?v=...
-Áudio: https://open.spotify.com/track/...
+Áudio: https://exemplo.org/audio.mp3
 Letra:
 Primeiro verso
 Segundo verso
@@ -29,7 +29,7 @@ Letra do próximo ponto
 
 ## Verificação de mídia
 
-Para pontos novos, a prévia oferece buscas no YouTube e no Spotify. Abra os resultados, escolha a gravação correta e cole o endereço no campo de vídeo ou áudio antes de confirmar. A gravação selecionada será exibida como link junto ao ponto. O app não escolhe automaticamente uma gravação porque os resultados dependem da versão e do contexto do templo.
+O catálogo [Pontos Cantados do TUEG](https://pontos-cantados.tueg.pt/) pode ser consultado como referência de pesquisa. Ao cadastrar o áudio, informe um endereço direto e reproduzível (por exemplo, arquivo MP3, OGG ou WAV). Links de páginas do YouTube e Spotify não são arquivos de áudio e não podem ser tocados pelo player da aplicação. Quando um ponto for aberto, o app exibe a letra e tenta iniciar a reprodução na própria página; alguns navegadores podem exigir um toque em Reproduzir.
 
 ## Atualização do banco
 
@@ -42,4 +42,4 @@ Abra `conversor.html` no navegador ou use **Preparar vários arquivos** na área
 
 Para reconhecer vários pontos no mesmo documento, separe-os com uma linha de pelo menos três hífens (`---`), sublinhados, sinais de igual ou asteriscos. A primeira linha de cada bloco será o título; as linhas seguintes serão a letra. Sem separadores, o arquivo será interpretado como um único ponto. Confira e edite a prévia antes de baixar `pontos-para-importacao.txt`; depois, importe esse arquivo TXT pela área do administrador.
 
-O conversor organiza o texto, mas não atribui gravações automaticamente. Durante a importação, o site oferece buscas no YouTube e no Spotify para pontos novos. O administrador pode conferir a versão e cadastrar o link escolhido.
+O conversor organiza o texto, mas não atribui gravações automaticamente. Consulte o catálogo do TUEG como referência, confira a versão com a casa e cadastre um endereço direto de áudio.
