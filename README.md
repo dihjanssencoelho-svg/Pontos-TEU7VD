@@ -34,3 +34,6 @@ O código e os arquivos visuais permanecem no GitHub. Os dados editáveis ficam 
 
 
 O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consultado como referência. Os pontos podem reproduzir áudio diretamente na página quando o administrador cadastra uma URL direta e compatível (MP3, OGG ou WAV); links de YouTube e Spotify não são reproduzidos pelo player.
+
+
+Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra. A reprodução ocorre na janela do ponto; o usuário pode iniciar e controlar o vídeo ali.
