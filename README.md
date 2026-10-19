@@ -31,3 +31,6 @@ O app só libera edição se a sessão autenticada tiver `app_metadata.role = ad
 - Visitantes veem as letras em modo de leitura e podem baixar o TXT.
 
 O código e os arquivos visuais permanecem no GitHub. Os dados editáveis ficam no Supabase para que o administrador possa atualizar o conteúdo pela página sem expor senha ou token de escrita no repositório. A lista inicial continua no `app.js` e serve de catálogo base.
+
+
+O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consultado como referência. Os pontos podem reproduzir áudio diretamente na página quando o administrador cadastra uma URL direta e compatível (MP3, OGG ou WAV); links de YouTube e Spotify não são reproduzidos pelo player.
