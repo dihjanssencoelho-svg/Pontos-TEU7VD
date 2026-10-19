@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#37233d">
+  <title>Conversor de pontos | TU7VD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{font-family:"DM Sans",sans-serif;color:#372b38;background:#f5f4ef;font-synthesis:none}*{box-sizing:border-box}body{margin:0}.top{background:#37233d;color:#fff;padding:18px max(22px,calc((100% - 1000px)/2));display:flex;align-items:center;gap:12px}.top a{color:#eadcf0;text-decoration:none;font-size:13px;margin-left:auto}.mark{width:38px;height:38px;object-fit:cover;border-radius:50%}.top strong{font:700 16px Manrope,sans-serif}.wrap{max-width:1000px;margin:34px auto;padding:0 20px}.card{background:#fffefa;border:1px solid #e7e1dc;border-radius:14px;padding:24px;margin:16px 0;box-shadow:0 8px 24px #35263b0b}h1{font:800 28px Manrope,sans-serif;letter-spacing:-.04em;margin:0 0 8px}h2{font:700 17px Manrope,sans-serif;margin:0 0 12px}.intro,.hint{color:#707a73;line-height:1.6;font-size:14px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}.field{display:grid;gap:6px;font-size:12px;font-weight:700}.field input,.field select,textarea{font:14px "DM Sans",sans-serif;color:#372b38;border:1px solid #ded7df;border-radius:8px;background:white;padding:11px;min-width:0}.drop{display:block;border:2px dashed #cfc3d1;border-radius:12px;text-align:center;padding:26px 16px;cursor:pointer;background:#faf8fa}.drop:hover{border-color:#8e7293}.drop input{display:block;max-width:100%;margin:10px auto 0}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}button{border:0;border-radius:8px;padding:11px 16px;font:700 13px "DM Sans",sans-serif;cursor:pointer;background:#37233d;color:white}button.secondary{background:#f0e9f2;color:#644b69}button:disabled{opacity:.5;cursor:not-allowed}.status{font-size:13px;color:#547465;margin-top:10px;min-height:20px}.status.error{color:#a33a52}textarea{width:100%;min-height:360px;resize:vertical;font:13px/1.55 Consolas,monospace}.results{font-size:13px;color:#68746d}.small{font-size:12px;color:#838c85}@media(max-width:650px){.controls{grid-template-columns:1fr}.card{padding:18px}.wrap{margin:22px auto}.top{padding:14px 18px}}
+  </style>
+</head>
+<body>
+  <header class="top"><img class="mark" src="assets/logo-tu7vd.jpeg" alt=""><strong>Conversor de pontos · TU7VD</strong><a href="index.html">Voltar ao catálogo</a></header>
+  <main class="wrap">
+    <section class="card"><h1>Preparar arquivos para importação</h1><p class="intro">Selecione um ou mais documentos .docx ou .txt. O conversor organiza cada ponto no formato que o importador do site reconhece. Os arquivos originais não são alterados; o processamento acontece neste navegador.</p>
+      <label class="drop">Escolher arquivos .docx ou .txt<input id="files" type="file" accept=".docx,.txt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" multiple></label>
+      <div class="controls"><label class="field">Categoria padrão<input id="category" type="text" placeholder="Usa o nome do arquivo, se vazio"></label><label class="field">Grupo padrão<select id="group"><option>Linhas de trabalho</option><option>Orixás</option></select></label></div>
+      <p class="hint">O conversor separa pontos por linhas com três ou mais hifens, sublinhados, sinais de igual ou asteriscos. Em documentos sem esses separadores, considera o arquivo inteiro como um ponto: primeira linha como título e o restante como letra. Revise o resultado abaixo antes de baixar.</p>
+      <div class="actions"><button id="convert" type="button">Converter arquivos</button><button id="download" class="secondary" type="button" disabled>Baixar .txt para importar</button></div><div id="status" class="status" role="status"></div>
+    </section>
+    <section class="card"><h2>Prévia editável</h2><div id="summary" class="results">A prévia aparecerá aqui após a conversão.</div><textarea id="output" aria-label="Prévia editável do arquivo de importação" spellcheck="false" placeholder="O texto convertido aparecerá aqui."></textarea><p class="small">Você pode revisar e corrigir títulos, categorias e letras nesta caixa antes de baixar. Para buscar gravações, importe o arquivo no site; a prévia do administrador oferece buscas no YouTube e Spotify para cada ponto novo.</p></section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="conversor.js"></script>
+</body>
+</html>
