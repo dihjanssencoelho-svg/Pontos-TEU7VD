@@ -7,7 +7,7 @@ Na área **Administrador**, use **Importar pontos (.txt / .docx)**. A prévia in
 Use estes campos para cada ponto e separe os pontos por uma linha com três hífens (`---`):
 
 ```text
-Ponto: Hino à Oxalá
+Ponto: Hino a Oxalá
 Categoria: Oxalá
 Grupo: Orixás
 Fonte: https://exemplo.org/referencia
@@ -36,10 +36,10 @@ Para pontos novos, a prévia oferece buscas no YouTube e no Spotify. Abra os res
 Como a tabela existente agora também armazena URLs de vídeo e áudio, execute novamente `supabase/schema.sql` no SQL Editor do Supabase como `postgres` antes da primeira importação. As instruções adicionam as colunas ausentes sem remover os pontos já cadastrados.
 
 
-## Converter v?rios arquivos
+## Converter vários arquivos
 
-Abra `conversor.html` no navegador ou use **Preparar v?rios arquivos** na ?rea do administrador. Selecione v?rios `.docx` e `.txt` de uma vez, escolha o grupo e, opcionalmente, informe uma categoria padr?o. Quando a categoria padr?o fica vazia, o conversor usa o nome de cada arquivo.
+Abra `conversor.html` no navegador ou use **Preparar vários arquivos** na área do administrador. Selecione vários arquivos `.docx` e `.txt` de uma vez, escolha o grupo e, opcionalmente, informe uma categoria padrão. Se o campo de categoria ficar vazio, o conversor usará o nome de cada arquivo.
 
-Para reconhecer v?rios pontos no mesmo documento, separe-os com uma linha de pelo menos tr?s h?fens (`---`), sublinhados, sinais de igual ou asteriscos. A primeira linha de cada bloco vira o t?tulo e o restante vira a letra. Sem separadores, o arquivo ? interpretado como um ponto. Confira e edite a pr?via antes de baixar `pontos-para-importacao.txt`; depois importe esse TXT pela ?rea do administrador.
+Para reconhecer vários pontos no mesmo documento, separe-os com uma linha de pelo menos três hífens (`---`), sublinhados, sinais de igual ou asteriscos. A primeira linha de cada bloco será o título; as linhas seguintes serão a letra. Sem separadores, o arquivo será interpretado como um único ponto. Confira e edite a prévia antes de baixar `pontos-para-importacao.txt`; depois, importe esse arquivo TXT pela área do administrador.
 
-O conversor organiza o texto, mas n?o atribui grava??es automaticamente. Na importa??o, o site oferece buscas no YouTube e Spotify para pontos novos, para que o administrador confira a vers?o e cole o link escolhido.
+O conversor organiza o texto, mas não atribui gravações automaticamente. Durante a importação, o site oferece buscas no YouTube e no Spotify para pontos novos. O administrador pode conferir a versão e cadastrar o link escolhido.
