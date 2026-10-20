@@ -73,6 +73,15 @@
       </form>
       <div id="admin-tools" hidden>
         <p id="admin-session-label" class="admin-session-label"></p>
+        <section id="admin-invite-section" class="admin-user-management" aria-labelledby="admin-invite-heading">
+          <h3 id="admin-invite-heading">Acesso de pessoas do templo</h3>
+          <p class="import-help">Envie um convite para o e-mail de uma pessoa do templo. Ela criará a própria senha e poderá consultar e editar o catálogo. Somente o administrador principal pode convidar outras pessoas.</p>
+          <form id="admin-invite-form" class="admin-login-form">
+            <label for="admin-invite-email">E-mail da pessoa</label>
+            <input id="admin-invite-email" type="email" autocomplete="email" required placeholder="nome@exemplo.com">
+            <button class="save-button" id="admin-invite-submit" type="submit">Enviar convite</button>
+          </form>
+        </section>
         <label class="lyrics-label" for="admin-point-select">Escolha um ponto para editar</label>
         <select id="admin-point-select" class="admin-select"></select>
         <div class="dialog-actions">
