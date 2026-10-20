@@ -27,18 +27,20 @@ create policy "Anyone can read points"
   to anon, authenticated
   using (true);
 
+drop policy if exists "Admins and temple members can add points" on public.points;
 drop policy if exists "Admins can add points" on public.points;
-create policy "Admins can add points"
+create policy "Admins and temple members can add points"
   on public.points for insert
   to authenticated
-  with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
+  with check ((auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'temple_member'));
 
+drop policy if exists "Admins and temple members can edit points" on public.points;
 drop policy if exists "Admins can edit points" on public.points;
-create policy "Admins can edit points"
+create policy "Admins and temple members can edit points"
   on public.points for update
   to authenticated
-  using ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
-  with check ((auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
+  using ((auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'temple_member'))
+  with check ((auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'temple_member'));
 
 create or replace function public.set_points_updated_at()
 returns trigger
