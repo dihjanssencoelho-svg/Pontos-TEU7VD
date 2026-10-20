@@ -8,11 +8,13 @@ create table if not exists public.points (
   lyrics text not null default '',
   video_url text not null default '',
   audio_url text not null default '',
+  is_deleted boolean not null default false,
   updated_at timestamptz not null default now()
 );
 
 alter table public.points add column if not exists video_url text not null default '';
 alter table public.points add column if not exists audio_url text not null default '';
+alter table public.points add column if not exists is_deleted boolean not null default false;
 
 alter table public.points enable row level security;
 
