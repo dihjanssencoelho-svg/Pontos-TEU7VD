@@ -74,3 +74,28 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent }
 @media(max-width:760px){.catalog-layout{grid-template-columns:1fr;gap:16px}.category-sidebar{max-height:255px;border-radius:14px}.catalog-heading{align-items:flex-start}.results-pane .point-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:580px){.topbar{height:72px;padding:0 16px}.brand{gap:10px}.brand-mark{width:42px;height:42px}.brand b{font-size:16px}.brand small{font-size:9px}.top-actions{gap:2px}.text-button{padding:8px 9px}.hero{min-height:330px;padding:42px 21px 34px}.hero-content{max-width:100%}.eyebrow{font-size:9px;padding:8px 10px;margin-bottom:15px}.hero h1{max-width:330px;font-size:39px}.hero-copy{max-width:300px;font-size:14px;line-height:1.6}.hero-art{right:-30%;top:53%;width:88%;height:92%;opacity:.3}.catalog-shell{padding:35px 16px 20px}.catalog-heading h2{font-size:23px}.search-wrap{height:49px;margin-top:16px}.catalog-layout{margin-top:17px}.category-sidebar{max-height:225px}.sidebar-heading{padding:13px 13px 8px}.category-filters{padding:2px 8px 10px}.filter-chip{min-height:38px}.results-pane .point-grid{grid-template-columns:1fr;gap:11px}.point-card{min-height:170px;padding:18px}.card-title{margin-top:14px;font-size:16px}.card-bottom{padding-top:15px}.note{margin:18px 16px 30px;padding:14px;font-size:12px}footer{padding:16px;gap:8px;font-size:10px}.footer-mark{width:28px;height:28px}.footer-contact{margin-left:auto}.footer-right{display:none}.dialog-content{padding:2px 18px 20px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+/* Ilustrações individuais por categoria, com área clara para manter o texto legível. */
+.point-card{
+  --card-accent:#c8a55d;
+  background-image:linear-gradient(90deg,rgba(255,254,250,.97) 0%,rgba(255,254,250,.93) 44%,rgba(255,254,250,.80) 72%,rgba(255,254,250,.62) 100%),var(--card-art,none);
+  background-size:100% 100%,cover;
+  background-position:center,right center;
+  background-repeat:no-repeat;
+}
+.point-card::before{background:linear-gradient(90deg,var(--card-accent),rgba(255,255,255,.48) 78%)}
+.point-card[data-category="Oxalá"],.point-card[data-category="Logunan"]{--card-accent:#8b70a0}
+.point-card[data-category="Ogum"],.point-card[data-category="Caboclos"]{--card-accent:#627f4a}
+.point-card[data-category="Oxóssi"]{--card-accent:#538b48}
+.point-card[data-category="Xangô"],.point-card[data-category="Exus"],.point-card[data-category="Exu Mirim"]{--card-accent:#a4464e}
+.point-card[data-category="Iansã"],.point-card[data-category="Oroiná"]{--card-accent:#c76b52}
+.point-card[data-category="Oxum"],.point-card[data-category="Baianos"],.point-card[data-category="Ciganos"]{--card-accent:#b89443}
+.point-card[data-category="Iemanjá"],.point-card[data-category="Marinheiros"]{--card-accent:#508ca6}
+.point-card[data-category="Obaluaê"],.point-card[data-category="Omolu"],.point-card[data-category="Pretos Velhos"]{--card-accent:#87694f}
+.point-card[data-category="Nanã"],.point-card[data-category="Pombagiras"],.point-card[data-category="Pombogira Mirim"]{--card-accent:#8d638c}
+.point-card[data-category="Obá"],.point-card[data-category="Boiadeiros"]{--card-accent:#97733c}
+.point-card[data-category="Oxumaré"]{--card-accent:#528b82}
+.point-card[data-category="Erês / Ibejada"]{--card-accent:#d29b62}
+.point-card[data-category="Malandros"]{--card-accent:#52556b}
+.point-card .card-title,.point-card .card-subtitle{max-width:78%}
+.point-card .card-status{max-width:55%}
+@media(max-width:580px){.point-card .card-title,.point-card .card-subtitle{max-width:82%}.point-card .card-status{max-width:58%}}
