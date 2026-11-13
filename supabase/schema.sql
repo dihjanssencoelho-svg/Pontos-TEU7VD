@@ -2,7 +2,7 @@ create table if not exists public.points (
   id text primary key,
   title text not null,
   category text not null,
-  work_group text not null check (work_group in ('Orixás', 'Linhas de trabalho')),
+  work_group text not null check (work_group in ('Orixás', 'Linhas de trabalho', 'Ritualística')),
   subtitle text not null default '',
   source text not null default '',
   lyrics text not null default '',
@@ -56,3 +56,9 @@ drop trigger if exists points_updated_at on public.points;
 create trigger points_updated_at
   before update on public.points
   for each row execute function public.set_points_updated_at();
+
+-- Amplia os grupos permitidos sem modificar ou excluir registros existentes.
+alter table public.points drop constraint if exists points_work_group_check;
+alter table public.points
+  add constraint points_work_group_check
+  check (work_group in ('Orixás', 'Linhas de trabalho', 'Ritualística'));
