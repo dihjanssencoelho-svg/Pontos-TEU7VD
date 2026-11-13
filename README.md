@@ -37,3 +37,10 @@ O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consult
 
 
 Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra. A reprodução ocorre na janela do ponto; o usuário pode iniciar e controlar o vídeo ali.
+
+
+## Grupo Ritualística
+
+O catálogo também permite cadastrar pontos no grupo **Ritualística**, com os subgrupos **Defumação** e **Abertura**. Na edição do ponto, selecione `Ritualística` em **Grupo** e escolha o subgrupo correspondente. Os pontos anteriores permanecem nas categorias e grupos originais.
+
+Para bancos já existentes, aplique uma única vez a migração `supabase/migrations/20261113_ritualistica_grupo.sql` no SQL Editor do Supabase. Ela apenas amplia a restrição `work_group`; não altera nem exclui registros. O arquivo `supabase/schema.sql` também foi atualizado para novas instalações.
