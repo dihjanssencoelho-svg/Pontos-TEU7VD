@@ -46,3 +46,11 @@ test('catalog writes use the review and deletion RPCs instead of direct point wr
   assert.match(app, /rpc\('soft_delete_point'/);
   assert.doesNotMatch(app, /from\(['"]points['"]\)\.(?:insert|update|upsert|delete)\(/);
 });
+
+test('approval refuses stale text and never reactivates an inactive point', () => {
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150000_add_point_text_review_workflow.sql'), 'utf8');
+  assert.match(sql, /and is_deleted = false[\s\S]*and title is not distinct from v_review\.original_content[\s\S]*and lyrics is not distinct from v_review\.original_content/i);
+  assert.match(sql, /inactive points cannot be reactivated by text review approval/i);
+  assert.match(sql, /category = case when category is not distinct from v_review\.original_content/i);
+  assert.doesNotMatch(sql, /is_deleted\s*=\s*false\s*where id = v_review\.point_id/i);
+});
