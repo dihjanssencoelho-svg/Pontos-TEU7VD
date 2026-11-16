@@ -25,6 +25,20 @@
     };
     lines.forEach((line, index) => {
       const lineNumber = index + 1;
+      const letters = line.match(/[\p{L}]/gu) || [];
+      if (letters.length >= 3 && line === line.toLocaleUpperCase('pt-BR') && line !== line.toLocaleLowerCase('pt-BR')) {
+        const normalized = line.toLocaleLowerCase('pt-BR').replace(/[\p{L}]+/gu, (word, offset) => {
+          const key = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          const firstWord = !line.slice(0, offset).match(/[\p{L}]/u);
+          return firstWord || PROTECTED_TERMS.has(key)
+            ? word[0].toLocaleUpperCase('pt-BR') + word.slice(1)
+            : word;
+        });
+        add('deterministic', 'lyrics', lineNumber, line, normalized, 'Texto em letras maiúsculas. Confira a sugestão de capitalização.');
+        suggestions[suggestions.length - 1].code = 'uppercase';
+        suggestions[suggestions.length - 1].lineOriginal = line;
+        suggestions[suggestions.length - 1].lineProposed = normalized;
+      }
       if (/[ \t]+$/.test(line)) add('deterministic', 'lyrics', lineNumber, line, line.replace(/[ \t]+$/, ''), 'Espaços no fim do verso.');
       if (/ {2,}/.test(line)) add('deterministic', 'lyrics', lineNumber, line, line.replace(/ {2,}/g, ' '), 'Espaços repetidos entre palavras.');
       if (/\s+[,.!?;:]/.test(line)) add('deterministic', 'lyrics', lineNumber, line, line.replace(/\s+([,.!?;:])/g, '$1'), 'Espaço antes da pontuação.');

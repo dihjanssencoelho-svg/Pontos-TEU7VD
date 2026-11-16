@@ -17,6 +17,18 @@ test('assisted spelling suggestions stay suggestions and do not rewrite sacred n
   assert.ok(!suggestions.some(item => item.original === 'Oxala' || item.original === 'Ogum'));
 });
 
+test('all-uppercase verses receive a deterministic capitalization suggestion without changing the source', () => {
+  const source = 'CALUNGA É, CALUNGA AH,\nEXÚ QUE VEIO PARA DEMANDA QUEBRAR (X2)';
+  const suggestions = review.inspect(source);
+  const casing = suggestions.filter(item => item.message.includes('letras maiúsculas'));
+  assert.equal(casing.length, 2);
+  assert.equal(casing[0].proposed, 'Calunga é, calunga ah,');
+  assert.equal(casing[1].proposed, 'Exú que veio para demanda quebrar (x2)');
+  assert.equal(source, 'CALUNGA É, CALUNGA AH,\nEXÚ QUE VEIO PARA DEMANDA QUEBRAR (X2)');
+  assert.equal(review.inspect('Calunga é, calunga ah').some(item => item.message.includes('letras maiúsculas')), false);
+  assert.equal(casing[0].code, 'uppercase');
+});
+
 test('consecutive repeated verses are flagged without being removed', () => {
   const suggestions = review.inspect('Eu vou cantar\nEu vou cantar');
   const repeated = suggestions.find(item => item.message.includes('repetido consecutivamente'));
@@ -39,10 +51,23 @@ test('migration does not backfill points or modify the protected backup', () => 
   assert.match(hardening, /grant select on public\.points to anon, authenticated/i);
 });
 
+test('review decision can apply only supported casing suggestions and audits the accepted text', () => {
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116133149_approve_point_text_review_suggestions.sql'), 'utf8');
+  assert.match(sql, /approved_content jsonb/i);
+  assert.match(sql, /suggestions_applied boolean/i);
+  assert.match(sql, /where value ->> 'code' = 'uppercase'/i);
+  assert.match(sql, /v_lines\[v_line\] := v_suggestion ->> 'lineProposed'/i);
+  assert.match(sql, /point text changed after this review was submitted/i);
+  assert.match(sql, /inactive points cannot be reactivated by text review approval/i);
+  assert.match(sql, /grant execute on function public\.decide_point_text_review\(uuid, text, text, boolean\) to authenticated/i);
+});
+
 test('catalog writes use the review and deletion RPCs instead of direct point writes', () => {
   const app = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
   assert.match(app, /rpc\('submit_point_text_review'/);
   assert.match(app, /rpc\('decide_point_text_review'/);
+  assert.match(app, /Aplicar capitalização e aprovar/);
+  assert.match(app, /approved_content/);
   assert.match(app, /rpc\('update_point_metadata'/);
   assert.match(app, /rpc\('soft_delete_point'/);
   assert.doesNotMatch(app, /from\(['"]points['"]\)\.(?:insert|update|upsert|delete)\(/);
