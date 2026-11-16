@@ -30,7 +30,7 @@ test('text change detection ignores unrelated metadata but detects lyrics edits'
 });
 
 test('migration does not backfill points or modify the protected backup', () => {
-  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150000_add_point_text_review_workflow.sql'), 'utf8');
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116124408_add_point_text_review_workflow.sql'), 'utf8');
   assert.match(sql, /security definer[\s\S]*set search_path = ''/i);
   assert.match(sql, /unique index if not exists point_text_reviews_one_pending_per_point_idx/i);
   assert.doesNotMatch(sql, /(?:insert|update|delete)\s+(?:into\s+|from\s+)?public\.points_text_review_backup_20261113/i);
@@ -49,7 +49,7 @@ test('catalog writes use the review and deletion RPCs instead of direct point wr
 });
 
 test('approval refuses stale text and never reactivates an inactive point', () => {
-  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150000_add_point_text_review_workflow.sql'), 'utf8');
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116124408_add_point_text_review_workflow.sql'), 'utf8');
   assert.match(sql, /and is_deleted = false[\s\S]*and title is not distinct from v_review\.original_content[\s\S]*and lyrics is not distinct from v_review\.original_content/i);
   assert.match(sql, /inactive points cannot be reactivated by text review approval/i);
   assert.match(sql, /category = case when category is not distinct from v_review\.original_content/i);
@@ -57,7 +57,7 @@ test('approval refuses stale text and never reactivates an inactive point', () =
 });
 
 test('both existing editor roles retain decision access and metadata edits remain available during review', () => {
-  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150000_add_point_text_review_workflow.sql'), 'utf8');
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116124408_add_point_text_review_workflow.sql'), 'utf8');
   assert.equal((sql.match(/coalesce\(v_role, ''\) not in \('admin', 'temple_member'\)/g) || []).length, 4);
   const metadataRpc = sql.split('create or replace function public.update_point_metadata')[1];
   assert.ok(metadataRpc);
