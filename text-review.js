@@ -25,8 +25,9 @@
     };
     lines.forEach((line, index) => {
       const lineNumber = index + 1;
-      const letters = line.match(/[\p{L}]/gu) || [];
-      if (letters.length >= 3 && line === line.toLocaleUpperCase('pt-BR') && line !== line.toLocaleLowerCase('pt-BR')) {
+      const caseProbe = line.replace(/\(\s*x\s*\d+\s*\)/giu, '');
+      const letters = caseProbe.match(/[\p{L}]/gu) || [];
+      if (letters.length >= 3 && letters.every(letter => letter === letter.toLocaleUpperCase('pt-BR'))) {
         const normalized = line.toLocaleLowerCase('pt-BR').replace(/[\p{L}]+/gu, (word, offset) => {
           const key = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
           const firstWord = !line.slice(0, offset).match(/[\p{L}]/u);
