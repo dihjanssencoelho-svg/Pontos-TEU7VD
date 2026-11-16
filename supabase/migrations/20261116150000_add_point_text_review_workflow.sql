@@ -165,9 +165,40 @@ begin
 end;
 $$;
 
+-- Metadata-only edits do not change reviewed text and remain immediate.
+create or replace function public.update_point_metadata(
+  p_point_id text,
+  p_category text,
+  p_work_group text,
+  p_source text default '',
+  p_video_url text default '',
+  p_audio_url text default ''
+)
+returns void
+language plpgsql
+security definer
+set search_path = ''
+as $$
+declare
+  v_role text := auth.jwt() -> 'app_metadata' ->> 'role';
+begin
+  if coalesce(v_role, '') not in ('admin', 'temple_member') or auth.uid() is null then
+    raise exception 'not authorized' using errcode = '42501';
+  end if;
+  update public.points set
+    category = p_category, work_group = p_work_group,
+    source = coalesce(p_source, ''), video_url = coalesce(p_video_url, ''),
+    audio_url = coalesce(p_audio_url, '')
+  where id = p_point_id;
+  if not found then raise exception 'point not found' using errcode = 'P0002'; end if;
+end;
+$$;
+
 revoke all on function public.submit_point_text_review(text, jsonb, jsonb) from public, anon;
 revoke all on function public.decide_point_text_review(uuid, text, text) from public, anon;
 revoke all on function public.soft_delete_point(text) from public, anon;
+revoke all on function public.update_point_metadata(text, text, text, text, text, text) from public, anon;
 grant execute on function public.submit_point_text_review(text, jsonb, jsonb) to authenticated;
 grant execute on function public.decide_point_text_review(uuid, text, text) to authenticated;
 grant execute on function public.soft_delete_point(text) to authenticated;
+grant execute on function public.update_point_metadata(text, text, text, text, text, text) to authenticated;
