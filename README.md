@@ -44,3 +44,9 @@ Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página
 O catálogo também permite cadastrar pontos no grupo **Ritualística**, com os subgrupos **Defumação** e **Abertura**. Na edição do ponto, selecione `Ritualística` em **Grupo** e escolha o subgrupo correspondente. Os pontos anteriores permanecem nas categorias e grupos originais.
 
 Para bancos já existentes, aplique uma única vez a migração `supabase/migrations/20261113_ritualistica_grupo.sql` no SQL Editor do Supabase. Ela apenas amplia a restrição `work_group`; não altera nem exclui registros. O arquivo `supabase/schema.sql` também foi atualizado para novas instalações.
+
+## Revisão textual de novos pontos e edições
+
+Em projetos existentes, aplique as migrações de revisão em ordem depois do esquema atual. Em uma instalação nova, execute primeiro `supabase/schema.sql` e depois as migrações `supabase/migrations/20261116124408_add_point_text_review_workflow.sql` e `supabase/migrations/20261116150100_lock_point_writes_to_review_rpcs.sql`, nessa ordem. A primeira cria a fila privada de revisão sem atualizar os pontos cadastrados nem a tabela de backup; aplique a segunda depois de publicar o novo fluxo no site.
+
+Novos pontos e alterações no título, complemento ou letra ficam pendentes até que uma pessoa autorizada aprove ou rejeite a proposta. Enquanto aguarda, o catálogo público continua exibindo o texto aprovado. Alterações apenas em metadados não textuais são imediatas. A decisão registra o conteúdo original, a proposta, as sugestões automáticas, quem enviou e quem decidiu. As sugestões são locais e gratuitas; versos repetidos e grafias rituais protegidas não são alterados automaticamente.

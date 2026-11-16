@@ -84,6 +84,12 @@
         </section>
         <label class="lyrics-label" for="admin-point-select">Escolha um ponto para editar</label>
         <select id="admin-point-select" class="admin-select"></select>
+        <section class="point-review-queue" aria-labelledby="point-review-heading">
+          <h3 id="point-review-heading">Revisão de textos</h3>
+          <p class="import-help">Novos pontos e alterações de título, complemento ou letra aguardam aprovação. Metadados não textuais são atualizados sem mexer no texto aprovado.</p>
+          <button class="action-link" id="refresh-point-reviews" type="button">Atualizar revisões</button>
+          <div id="point-review-list" class="point-review-list" aria-live="polite"></div>
+        </section>
         <div class="dialog-actions">
           <button class="save-button" id="admin-edit-point" type="button">Editar ponto</button>
           <button class="action-link" id="admin-delete-point" type="button">Excluir ponto selecionado</button>
@@ -110,6 +116,7 @@
   <script src="supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="text-review.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
