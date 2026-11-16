@@ -34,7 +34,7 @@ test('migration does not backfill points or modify the protected backup', () => 
   assert.match(sql, /security definer[\s\S]*set search_path = ''/i);
   assert.match(sql, /unique index if not exists point_text_reviews_one_pending_per_point_idx/i);
   assert.doesNotMatch(sql, /(?:insert|update|delete)\s+(?:into\s+|from\s+)?public\.points_text_review_backup_20261113/i);
-  const hardening = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150100_lock_point_writes_to_review_rpcs.sql'), 'utf8');
+  const hardening = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116125157_lock_point_writes_to_review_rpcs.sql'), 'utf8');
   assert.match(hardening, /revoke all on public\.points from anon, authenticated/i);
   assert.match(hardening, /grant select on public\.points to anon, authenticated/i);
 });
