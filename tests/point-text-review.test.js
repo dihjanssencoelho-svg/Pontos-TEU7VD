@@ -54,3 +54,11 @@ test('approval refuses stale text and never reactivates an inactive point', () =
   assert.match(sql, /category = case when category is not distinct from v_review\.original_content/i);
   assert.doesNotMatch(sql, /is_deleted\s*=\s*false\s*where id = v_review\.point_id/i);
 });
+
+test('both existing editor roles retain decision access and metadata edits remain available during review', () => {
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261116150000_add_point_text_review_workflow.sql'), 'utf8');
+  assert.equal((sql.match(/coalesce\(v_role, ''\) not in \('admin', 'temple_member'\)/g) || []).length, 4);
+  const metadataRpc = sql.split('create or replace function public.update_point_metadata')[1];
+  assert.ok(metadataRpc);
+  assert.doesNotMatch(metadataRpc, /point_text_reviews/i);
+});
