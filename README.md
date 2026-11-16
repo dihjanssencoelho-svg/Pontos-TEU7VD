@@ -19,6 +19,12 @@ Site estático, simples e compatível com GitHub Pages. O catálogo público pod
 6. Em **Authentication → URL Configuration**, configure o endereço publicado no GitHub Pages como **Site URL** e adicione-o às URLs de redirecionamento permitidas.
 7. Publique os arquivos deste projeto no repositório e ative GitHub Pages.
 
+### Revisão textual de novos pontos e edições
+
+Em projetos existentes, aplique a migração `supabase/migrations/20261116150000_add_point_text_review_workflow.sql` depois do esquema atual. Em uma instalação nova, execute primeiro `supabase/schema.sql` e depois essa migração. A migração cria uma fila privada de revisão e não atualiza os pontos já cadastrados nem a tabela de backup.
+
+Novos pontos e alterações ficam pendentes até que uma pessoa autorizada aprove ou rejeite a proposta. Enquanto aguarda, o catálogo público continua exibindo o texto aprovado. A decisão registra o conteúdo original, a proposta, as sugestões automáticas, quem enviou e quem decidiu. As sugestões são locais e gratuitas; versos repetidos e grafias rituais protegidas não são alterados automaticamente.
+
 O app só libera edição se a sessão autenticada tiver `app_metadata.role = admin`. A tabela usa Row Level Security: qualquer visitante pode ler, mas somente administradores podem inserir ou alterar pontos. Senhas não são armazenadas no código do site.
 
 ## Uso
@@ -37,10 +43,3 @@ O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consult
 
 
 Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra. A reprodução ocorre na janela do ponto; o usuário pode iniciar e controlar o vídeo ali.
-
-
-## Grupo Ritualística
-
-O catálogo também permite cadastrar pontos no grupo **Ritualística**, com os subgrupos **Defumação** e **Abertura**. Na edição do ponto, selecione `Ritualística` em **Grupo** e escolha o subgrupo correspondente. Os pontos anteriores permanecem nas categorias e grupos originais.
-
-Para bancos já existentes, aplique uma única vez a migração `supabase/migrations/20261113_ritualistica_grupo.sql` no SQL Editor do Supabase. Ela apenas amplia a restrição `work_group`; não altera nem exclui registros. O arquivo `supabase/schema.sql` também foi atualizado para novas instalações.
