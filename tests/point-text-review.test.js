@@ -42,6 +42,7 @@ test('catalog writes use the review and deletion RPCs instead of direct point wr
   const app = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
   assert.match(app, /rpc\('submit_point_text_review'/);
   assert.match(app, /rpc\('decide_point_text_review'/);
+  assert.match(app, /rpc\('update_point_metadata'/);
   assert.match(app, /rpc\('soft_delete_point'/);
   assert.doesNotMatch(app, /from\(['"]points['"]\)\.(?:insert|update|upsert|delete)\(/);
 });
