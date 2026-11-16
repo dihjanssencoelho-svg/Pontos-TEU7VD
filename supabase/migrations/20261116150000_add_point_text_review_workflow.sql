@@ -129,13 +129,30 @@ begin
       );
     else
       update public.points set
-        title = v_content ->> 'title', category = v_content ->> 'category',
-        work_group = v_content ->> 'work_group', subtitle = coalesce(v_content ->> 'subtitle', ''),
-        source = coalesce(v_content ->> 'source', ''), lyrics = coalesce(v_content ->> 'lyrics', ''),
-        video_url = coalesce(v_content ->> 'video_url', ''), audio_url = coalesce(v_content ->> 'audio_url', ''),
-        is_deleted = false
-      where id = v_review.point_id;
-      if not found then raise exception 'point no longer exists' using errcode = 'P0002'; end if;
+        title = v_content ->> 'title',
+        subtitle = coalesce(v_content ->> 'subtitle', ''),
+        lyrics = coalesce(v_content ->> 'lyrics', ''),
+        category = case when category is not distinct from v_review.original_content ->> 'category'
+          then v_content ->> 'category' else category end,
+        work_group = case when work_group is not distinct from v_review.original_content ->> 'work_group'
+          then v_content ->> 'work_group' else work_group end,
+        source = case when source is not distinct from v_review.original_content ->> 'source'
+          then coalesce(v_content ->> 'source', '') else source end,
+        video_url = case when video_url is not distinct from v_review.original_content ->> 'video_url'
+          then coalesce(v_content ->> 'video_url', '') else video_url end,
+        audio_url = case when audio_url is not distinct from v_review.original_content ->> 'audio_url'
+          then coalesce(v_content ->> 'audio_url', '') else audio_url end
+      where id = v_review.point_id
+        and is_deleted = false
+        and title is not distinct from v_review.original_content ->> 'title'
+        and subtitle is not distinct from v_review.original_content ->> 'subtitle'
+        and lyrics is not distinct from v_review.original_content ->> 'lyrics';
+      if not found then
+        if exists (select 1 from public.points where id = v_review.point_id and is_deleted = true) then
+          raise exception 'inactive points cannot be reactivated by text review approval' using errcode = '55000';
+        end if;
+        raise exception 'point text changed after this review was submitted; reject and resubmit against the current text' using errcode = '40001';
+      end if;
     end if;
   end if;
   update public.point_text_reviews set
@@ -156,9 +173,6 @@ declare
 begin
   if coalesce(v_role, '') not in ('admin', 'temple_member') or auth.uid() is null then
     raise exception 'not authorized' using errcode = '42501';
-  end if;
-  if exists (select 1 from public.point_text_reviews where point_id = p_point_id and status = 'pending') then
-    raise exception 'resolve the pending text review before deleting this point' using errcode = '23505';
   end if;
   update public.points set is_deleted = true where id = p_point_id;
   if not found then raise exception 'point not found' using errcode = 'P0002'; end if;
