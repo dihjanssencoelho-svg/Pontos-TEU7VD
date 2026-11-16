@@ -32,12 +32,6 @@ create policy "Temple editors can read text review history"
   on public.point_text_reviews for select to authenticated
   using ((select auth.jwt() -> 'app_metadata' ->> 'role') in ('admin', 'temple_member'));
 
--- All new records and future edits to title, subtitle, or lyrics must go through review.
--- Remove broad table grants (including TRUNCATE, which is not governed by RLS),
--- then restore only catalog reads for the public client roles.
-revoke all on public.points from anon, authenticated;
-grant select on public.points to anon, authenticated;
-
 create or replace function public.submit_point_text_review(
   p_point_id text,
   p_proposed_content jsonb,
