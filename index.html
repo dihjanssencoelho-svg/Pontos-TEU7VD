@@ -55,6 +55,15 @@
   </main>
   <footer><img class="footer-mark" src="assets/Logo%20TEU7VD.png" alt=""><span>Feito para aprender, lembrar e cantar junto.</span><details class="footer-contact"><summary>Feito por Diego Janssen</summary><a class="footer-phone" href="tel:+5511970362932">(11) 97036-2932</a></details><span class="footer-right">TU7VD · Caderno de estudo</span></footer>
 
+  <section id="sequence-player" class="sequence-player" aria-label="Reprodução em sequência" hidden>
+    <div class="sequence-track" id="sequence-track"><strong id="sequence-title">Nenhum ponto selecionado</strong><small id="sequence-position"></small></div>
+    <label class="sequence-scope-label" for="sequence-scope">Fila</label>
+    <select id="sequence-scope" aria-label="Tipo de fila"><option value="category">Categoria</option><option value="line">Linha</option><option value="custom">Personalizada</option></select>
+    <select id="sequence-filter" aria-label="Categoria ou linha da fila"></select>
+    <div class="sequence-controls"><button id="sequence-previous" type="button" aria-label="Ponto anterior">⏮</button><button id="sequence-toggle" type="button" aria-label="Reproduzir">▶</button><button id="sequence-next" type="button" aria-label="Próximo ponto">⏭</button></div>
+    <audio id="sequence-audio" preload="metadata"></audio>
+  </section>
+
   <dialog id="point-dialog" class="point-dialog">
     <form method="dialog" class="dialog-close-row"><button class="icon-button close-dialog" aria-label="Fechar">×</button></form>
     <div class="dialog-content" id="dialog-content"></div>
@@ -116,7 +125,8 @@
   <script src="supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="sequence-player.js?v=20261117-sequence-1"></script>
   <script src="text-review.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261117-sequence-1"></script>
 </body>
 </html>
