@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261118-player-layout-1">
 </head>
 <body>
   <header class="topbar">
@@ -64,8 +64,13 @@
     <select id="sequence-filter" aria-label="Categoria ou linha da fila"></select>
     <div class="sequence-controls"><button id="sequence-previous" type="button" aria-label="Ponto anterior">⏮</button><button id="sequence-toggle" type="button" aria-label="Reproduzir">▶</button><button id="sequence-next" type="button" aria-label="Próximo ponto">⏭</button></div>
     <audio id="sequence-audio" preload="metadata"></audio>
-    <div id="sequence-prompt" class="sequence-prompt" hidden><span>Quer abrir a letra para acompanhar o áudio?</span><button id="sequence-open-point" type="button">Acompanhar a letra</button><button id="sequence-dismiss-prompt" type="button" aria-label="Agora não">Agora não</button></div>
+    <div id="sequence-prompt" class="sequence-prompt" hidden><span>Quer acompanhar a letra na tela?</span><button id="sequence-open-point" type="button">Mostrar letra</button><button id="sequence-dismiss-prompt" type="button" aria-label="Agora não">Agora não</button></div>
   </section>
+
+  <aside id="sequence-lyrics-panel" class="sequence-lyrics-panel" aria-labelledby="sequence-lyrics-title" aria-live="polite" hidden>
+    <header><div><small id="sequence-lyrics-category"></small><h2 id="sequence-lyrics-title">Letra do ponto</h2></div><button id="sequence-lyrics-close" type="button" aria-label="Fechar letra">×</button></header>
+    <pre id="sequence-lyrics-text" class="sequence-lyrics-text"></pre>
+  </aside>
 
   <dialog id="point-dialog" class="point-dialog">
     <form method="dialog" class="dialog-close-row"><button class="icon-button close-dialog" aria-label="Fechar">×</button></form>
@@ -130,6 +135,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="sequence-player.js?v=20261118-youtube-mini-1"></script>
   <script src="text-review.js?v=20261116-case-review-3"></script>
-  <script src="app.js?v=20261118-youtube-mini-1"></script>
+  <script src="app.js?v=20261118-player-layout-1"></script>
 </body>
 </html>

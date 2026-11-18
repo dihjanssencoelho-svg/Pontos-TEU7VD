@@ -74,7 +74,7 @@ test('legacy pending reviews are reanalyzed and can send refreshed suggestions o
   assert.match(app, /rpc\('apply_point_text_review_suggestions'/);
   assert.match(app, /p_suggestions:pointReviewSuggestionCache\.get\(reviewId\)/);
   assert.match(html, /text-review\.js\?v=20261116-case-review-3/);
-  assert.match(html, /app\.js\?v=20261118-youtube-mini-1/);
+  assert.match(html, /app\.js\?v=20261118-player-layout-1/);
   assert.match(html, /sequence-player\.js\?v=20261118-youtube-mini-1/);
 });
 
