@@ -172,12 +172,26 @@ async function signIn(event){event.preventDefault();if(!supabaseClient)return;se
 async function signOut(){await supabaseClient?.auth.signOut();adminUser=null;updateAdminPanel();setAdminFeedback('Sessão encerrada.');}
 async function decidePointSuggestion(id,decision,button){
   if(!isSiteAdmin()){setAdminFeedback('Somente administradores podem decidir indicações.',true);return;}
-  button.disabled=true;const {data,error}=await supabaseClient.rpc('decide_point_suggestion',{p_suggestion_id:id,p_decision:decision});button.disabled=false;
+  let decisionNote=null;
+  if(decision==='rejected'){
+    const entered=window.prompt('Informe o motivo da rejeição (obrigatório, até 500 caracteres):');
+    if(entered===null){setAdminFeedback('Rejeição cancelada. A indicação continua pendente.');return;}
+    decisionNote=entered.trim();
+    if(!decisionNote){setAdminFeedback('Informe um motivo para rejeitar a indicação.',true);return;}
+    if(decisionNote.length>500){setAdminFeedback('O motivo deve ter no máximo 500 caracteres.',true);return;}
+  }
+  button.disabled=true;
+  const {data,error}=await supabaseClient.rpc('decide_point_suggestion',{
+    p_suggestion_id:id,
+    p_decision:decision,
+    p_decision_note:decisionNote
+  });
+  button.disabled=false;
   if(error){console.error(error);setAdminFeedback('Não foi possível registrar a decisão. '+(error.message||''),true);return;}
   if(data?.status==='duplicate'){
     const found=data.match||{};setAdminFeedback(`Este ponto já consta em ${found.category||'uma lista'} · ${found.work_group||'catálogo'}: “${found.title||'Ponto sem título'}”. A indicação permaneceu pendente.`,true);return;
   }
-  setAdminFeedback(decision==='approved'?'Indicação aprovada e adicionada ao catálogo.':'Indicação rejeitada.');
+  setAdminFeedback(decision==='approved'?'Indicação aprovada e adicionada ao catálogo.':'Indicação rejeitada com justificativa registrada.');
   await Promise.all([loadPointSuggestions(),decision==='approved'?loadRemotePoints():Promise.resolve()]);
 }
 function normalizeCatalogText(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim().toLocaleLowerCase('pt-BR');}
