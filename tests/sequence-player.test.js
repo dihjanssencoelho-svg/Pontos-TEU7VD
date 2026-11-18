@@ -56,7 +56,7 @@ test('catalog card opens its media detail and can separately start the bottom pl
   assert.match(app, /openPoint\(card\.dataset\.id,\{keepPlayerDock:true\}\)/);
   assert.match(app, /data-open-point="\$\{esc\(p\.id\)\}"/);
   assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===b\.dataset\.openPoint\)\)/);
-  assert.match(app, /function selectPointForPlayback\(point,preference='auto'\)/);
+  assert.match(app, /function selectPointForPlayback\(point,preference=''\)/);
   assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
   assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);
   assert.match(app, /sequence-open-point.*showSequenceLyrics\(sequenceQueue\[sequenceIndex\]\)/);
