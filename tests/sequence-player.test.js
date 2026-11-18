@@ -9,7 +9,8 @@ const points = [
   { id: 'c', title: 'Outro', category: 'Oxalá', group: 'Orixás', audio_url: 'https://cdn.example/c.ogg' },
   { id: 'd', title: 'Pendente', category: 'Ogum', group: 'Orixás', audioUrl: 'https://cdn.example/d.mp3', isDraft: true },
   { id: 'e', title: 'Removido', category: 'Ogum', group: 'Orixás', audioUrl: 'https://cdn.example/e.mp3', is_deleted: true },
-  { id: 'f', title: 'Vídeo', category: 'Ogum', group: 'Orixás', audioUrl: 'https://youtube.com/watch?v=abcdefghijk' },
+  { id: 'f', title: 'Vídeo', category: 'Ogum', group: 'Orixás', videoUrl: 'https://youtube.com/watch?v=abcdefghijk' },
+  { id: 'g', title: 'Vídeo pela fonte', category: 'Oxalá', group: 'Orixás', videoUrl: '', source: 'https://youtu.be/lmnopqrstuv' },
 ];
 
 test('category and line queues include only published points with direct audio', () => {
@@ -28,6 +29,17 @@ test('previous and next stay within queue bounds', () => {
   assert.equal(player.nextIndex(queue, 1, 1), -1);
 });
 
+test('YouTube links in either video or source fields are selectable media', () => {
+  assert.equal(player.youtubeVideoId(points[5]), 'abcdefghijk');
+  assert.equal(player.youtubeVideoId(points[6]), 'lmnopqrstuv');
+  assert.deepEqual(player.buildMediaQueue(points, 'category', 'Ogum').map(point => point.id), ['a', 'f']);
+  assert.deepEqual(player.buildMediaQueue(points, 'all').map(point => point.id), ['a', 'c', 'f', 'g']);
+});
+
+test('custom media queue keeps order and omits drafts, deleted points and points without media', () => {
+  assert.deepEqual(player.buildMediaQueue(points, 'custom', null, ['g', 'b', 'd', 'f', 'a']).map(point => point.id), ['g', 'f', 'a']);
+});
+
 test('the point dialog contains a selectable track control wired to playback', () => {
   const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
   const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
@@ -35,4 +47,17 @@ test('the point dialog contains a selectable track control wired to playback', (
   assert.match(app, /function playSelectedSequencePoint\(id\)/);
   assert.match(app, /#sequence-track-select'\)\.addEventListener\('change',event=>playSelectedSequencePoint/);
   assert.match(app, /prepareSequenceForPoint\(p\);const sequencePlayer=.*appendChild\(sequencePlayer\);dialog\.showModal\(\)/);
+});
+
+test('catalog card starts the bottom player and offers the lyrics dialog', () => {
+  const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
+  const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
+  assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===card\.dataset\.id\)\)/);
+  assert.match(app, /function selectPointForPlayback\(point\)/);
+  assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
+  assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);
+  assert.match(app, /sequence-open-point.*openPoint\(point\.id\)/);
+  assert.match(html, /id="sequence-youtube-host"/);
+  assert.match(html, /id="sequence-prompt"/);
+  assert.match(html, /option value="all">Todos os pontos/);
 });
