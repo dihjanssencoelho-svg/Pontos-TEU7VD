@@ -172,3 +172,9 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent }
 .password-recovery-open{display:inline-flex;margin-top:9px;padding:4px 0;color:var(--purple);font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
 .password-recovery-form{margin-top:14px;padding-top:13px;border-top:1px solid var(--line)}
 .password-recovery-form .action-link{justify-self:start;margin-top:3px}
+
+/* Respect the hidden state of login and password recovery forms. */
+.admin-login-form[hidden],
+.password-recovery-open[hidden] {
+  display: none !important;
+}
