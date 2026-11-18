@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261118-player-layout-2">
+  <link rel="stylesheet" href="styles.css?v=20261118-password-recovery-1">
 </head>
 <body>
   <header class="topbar">
@@ -123,6 +123,22 @@
         <label for="admin-email">E-mail</label><input id="admin-email" type="email" autocomplete="username" required>
         <label for="admin-password">Senha</label><input id="admin-password" type="password" autocomplete="current-password" required>
         <button class="save-button" type="submit">Entrar</button>
+      </form>
+      <button id="password-recovery-open" class="action-link password-recovery-open" type="button">Esqueci minha senha</button>
+      <form id="password-recovery-form" class="admin-login-form password-recovery-form" hidden>
+        <p class="import-help">Informe o e-mail cadastrado. Se houver uma conta autorizada, enviaremos um link para criar uma nova senha.</p>
+        <label for="password-recovery-email">E-mail cadastrado</label>
+        <input id="password-recovery-email" type="email" autocomplete="email" required>
+        <button class="save-button" type="submit">Enviar link de recuperação</button>
+        <button id="password-recovery-cancel" class="action-link" type="button">Voltar ao login</button>
+      </form>
+      <form id="password-update-form" class="admin-login-form password-recovery-form" hidden>
+        <p class="import-help">Crie uma nova senha para sua conta.</p>
+        <label for="new-admin-password">Nova senha</label>
+        <input id="new-admin-password" type="password" autocomplete="new-password" minlength="8" required>
+        <label for="confirm-admin-password">Confirme a nova senha</label>
+        <input id="confirm-admin-password" type="password" autocomplete="new-password" minlength="8" required>
+        <button class="save-button" type="submit">Salvar nova senha</button>
       </form>
       <div id="admin-tools" hidden>
         <p id="admin-session-label" class="admin-session-label"></p>
