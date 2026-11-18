@@ -186,7 +186,9 @@ async function findExistingPoint(title,lyrics){
   if(error)throw error;
   const candidateTitle=title||String(lyrics||'').split(/\r?\n/).find(line=>line.trim())?.slice(0,120)||'';
   const titleKey=normalizeCatalogText(candidateTitle),lyricsKey=normalizeCatalogText(lyrics);
-  return (data||[]).filter(point=>(titleKey&&normalizeCatalogText(point.title)===titleKey)||(lyricsKey&&normalizeCatalogText(point.lyrics)===lyricsKey));
+  const catalog=new Map(points.map(point=>[point.id,{...point,work_group:point.group}]));
+  for(const point of data||[])catalog.set(point.id,point);
+  return [...catalog.values()].filter(point=>(titleKey&&normalizeCatalogText(point.title)===titleKey)||(lyricsKey&&normalizeCatalogText(point.lyrics)===lyricsKey));
 }
 async function submitPointSuggestion(event){
   event.preventDefault();const form=event.currentTarget,feedback=document.querySelector('#suggestion-feedback'),submit=document.querySelector('#suggestion-submit'),data=new FormData(form);
