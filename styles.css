@@ -166,3 +166,5 @@ button,a,input,select{ -webkit-tap-highlight-color:transparent }
  .sequence-player:not(.sequence-player-in-dialog) .sequence-prompt{justify-content:flex-start}
 }
 @media(max-width:380px){.sequence-platform-options .platform-choice{flex:1;padding:8px 9px;font-size:11px}.sequence-controls{gap:5px}.sequence-controls button{width:34px;height:34px}.sequence-controls #sequence-toggle{width:40px;height:40px}}
+
+.spotify-review-comparison{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}.spotify-review-comparison section{padding:11px;border:1px solid var(--line);border-radius:9px;background:#f7f5ef;min-width:0}.spotify-review-comparison strong{display:block;font-size:10px;color:var(--muted);margin-bottom:5px}.spotify-review-comparison p{margin:0 0 4px;font:700 13px Manrope,sans-serif;overflow-wrap:anywhere}.spotify-review-comparison small{font-size:11px;color:var(--muted)}@media(max-width:580px){.spotify-review-comparison{grid-template-columns:1fr}}
