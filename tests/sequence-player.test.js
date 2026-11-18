@@ -56,8 +56,9 @@ test('catalog card starts the bottom player and offers the lyrics dialog', () =>
   assert.match(app, /function selectPointForPlayback\(point\)/);
   assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
   assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);
-  assert.match(app, /sequence-open-point.*openPoint\(point\.id\)/);
+  assert.match(app, /sequence-open-point.*showSequenceLyrics\(sequenceQueue\[sequenceIndex\]\)/);
   assert.match(html, /id="sequence-youtube-host"/);
   assert.match(html, /id="sequence-prompt"/);
+  assert.match(html, /id="sequence-lyrics-panel"/);
   assert.match(html, /option value="all">Todos os pontos/);
 });

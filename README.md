@@ -40,7 +40,7 @@ Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página
 
 ## Reprodução em sequência
 
-Ao escolher um card, a mídia vinculada abre no player fixo no rodapé. Vídeos do YouTube são exibidos em um mini player; áudios diretos usam os controles do player. A pergunta **Acompanhar a letra** abre a janela com o texto do ponto. O seletor oferece faixas disponíveis na categoria, linha de trabalho, fila personalizada ou em todos os pontos publicados. Ao terminar uma faixa de áudio ou vídeo, o player avança para a próxima faixa disponível. Itens removidos, rascunhos, pontos sem mídia e links do Spotify não entram nas filas. Em celulares, deslize horizontalmente sobre o título para avançar ou voltar. Esse fluxo não altera letras, revisões nem dados do Supabase.
+Ao escolher um card, a mídia vinculada abre no player fixo no rodapé. Vídeos do YouTube são exibidos em um mini player; áudios diretos usam os controles do player. **Mostrar letra** abre um painel sobre a página e mantém a reprodução ativa; ao avançar de faixa, o painel acompanha a letra do ponto atual. O seletor oferece faixas disponíveis na categoria, linha de trabalho, fila personalizada ou em todos os pontos publicados. Ao terminar uma faixa de áudio ou vídeo, o player avança para a próxima faixa disponível. Itens removidos, rascunhos, pontos sem mídia e links do Spotify não entram nas filas. Em celulares, deslize horizontalmente sobre o título para avançar ou voltar. Esse fluxo não altera letras, revisões nem dados do Supabase.
 
 
 ## Grupo Ritualística
