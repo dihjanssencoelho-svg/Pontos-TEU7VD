@@ -1,5 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
 const player = require('../sequence-player.js');
 
 const points = [
@@ -25,4 +26,13 @@ test('previous and next stay within queue bounds', () => {
   assert.equal(player.nextIndex(queue, 0, -1), -1);
   assert.equal(player.nextIndex(queue, 0, 1), 1);
   assert.equal(player.nextIndex(queue, 1, 1), -1);
+});
+
+test('the point dialog contains a selectable track control wired to playback', () => {
+  const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
+  const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
+  assert.match(html, /id="sequence-track-select"[^>]*aria-label="Selecionar ponto para reproduzir"/);
+  assert.match(app, /function playSelectedSequencePoint\(id\)/);
+  assert.match(app, /#sequence-track-select'\)\.addEventListener\('change',event=>playSelectedSequencePoint/);
+  assert.match(app, /prepareSequenceForPoint\(p\);const sequencePlayer=.*appendChild\(sequencePlayer\);dialog\.showModal\(\)/);
 });
