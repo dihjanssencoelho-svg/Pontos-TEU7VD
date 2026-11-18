@@ -5,8 +5,8 @@ declare v_title text;
 begin
  select title into v_title from public.points where id=new.point_id and is_deleted=false;
  if not found then raise exception 'active point not found' using errcode='P0002'; end if;
- if new.candidate_title is distinct from v_title then
-   raise exception 'Spotify candidate title must exactly match the catalog point title' using errcode='23514';
+ if lower(btrim(new.candidate_title)) is distinct from lower(btrim(v_title)) then
+   raise exception 'Spotify candidate title must exactly match the catalog point title (case-insensitive)' using errcode='23514';
  end if;
  return new;
 end;
