@@ -86,7 +86,7 @@ let youtubeMiniPlayer=null;
 let youtubeMiniApiRequested=false;
 let youtubeMiniVideoId='';
 let youtubePendingVideoId='';
-let spotifyIframeApi=null,spotifyIframeApiRequested=false,spotifyEmbedController=null,spotifyEmbedTrackUrl='',spotifyPendingUrl='',spotifyEndedForUrl='',activeMediaType='',sequenceMediaPreference='auto';
+let spotifyIframeApi=null,spotifyIframeApiRequested=false,spotifyEmbedController=null,spotifyEmbedTrackUrl='',spotifyPendingUrl='',spotifyEndedForUrl='',activeMediaType='',sequenceMediaPreference='';
 let adminUser=null;
 const filters=document.querySelector('#category-filters');
 const grid=document.querySelector('#point-grid');
