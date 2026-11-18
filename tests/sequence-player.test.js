@@ -56,7 +56,7 @@ test('catalog card opens its media detail and can separately start the bottom pl
   assert.match(app, /openPoint\(card\.dataset\.id,\{keepPlayerDock:true\}\)/);
   assert.match(app, /data-open-point="\$\{esc\(p\.id\)\}"/);
   assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===b\.dataset\.openPoint\)\)/);
-  assert.match(app, /function selectPointForPlayback\(point,preference='auto'\)/);
+  assert.match(app, /function selectPointForPlayback\(point,preference=''\)/);
   assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
   assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);
   assert.match(app, /sequence-open-point.*showSequenceLyrics\(sequenceQueue\[sequenceIndex\]\)/);
@@ -66,5 +66,27 @@ test('catalog card opens its media detail and can separately start the bottom pl
   assert.match(html, /option value="all">Todos os pontos/);
 });
 
-test('Spotify track links are parsed and included in the shared media queue',()=>{assert.equal(player.spotifyTrackId(points[7]),'5LNAFXRwufCwNphMKiix3v');assert.equal(player.hasPlayableSpotify(points[7]),true);assert.equal(player.hasPlayableAudio(points[7]),false);assert.equal(player.preferredMediaType(points[7],'spotify'),'spotify');assert.equal(player.preferredMediaType(points[7],'youtube'),'spotify');assert.deepEqual(player.buildMediaQueue(points,'category','Ogum').map(p=>p.id),['a','f','h']);});
+test('Spotify track links are parsed and included in the shared media queue',()=>{assert.equal(player.spotifyTrackId(points[7]),'5LNAFXRwufCwNphMKiix3v');assert.equal(player.hasPlayableSpotify(points[7]),true);assert.equal(player.hasPlayableAudio(points[7]),false);assert.equal(player.preferredMediaType(points[7],'spotify'),'spotify');
+  assert.equal(player.preferredMediaType(points[7],'auto'),'');
+  assert.equal(player.preferredMediaType(points[5],'youtube'),'youtube');
+  assert.equal(player.preferredMediaType(points[0],''),'');assert.equal(player.preferredMediaType(points[7],'youtube'),'');assert.deepEqual(player.buildMediaQueue(points,'category','Ogum').map(p=>p.id),['a','f','h']);});
 test('Spotify parser rejects album, playlist and unrelated URLs',()=>{assert.equal(player.spotifyTrackId({spotifyUrl:'https://open.spotify.com/album/5LNAFXRwufCwNphMKiix3v'}),'');assert.equal(player.spotifyTrackId({spotifyUrl:'https://open.spotify.com/playlist/5LNAFXRwCwNphMKiix3v'}),'');assert.equal(player.spotifyTrackId({spotifyUrl:'https://example.com/track/5LNAFXRwufCwNphMKiix3v'}),'');});
+
+test('automatic preference never chooses a platform; explicit selection is required',()=>{
+ const both={videoUrl:'https://youtu.be/abcdefghijk',spotifyUrl:'https://open.spotify.com/track/5LNAFXRwufCwNphMKiix3v',audioUrl:'https://cdn.example/song.mp3'};
+ assert.equal(player.preferredMediaType(both,'auto'),'');
+ assert.equal(player.preferredMediaType(both,''),'');
+ assert.equal(player.preferredMediaType(both,'youtube'),'youtube');
+ assert.equal(player.preferredMediaType(both,'spotify'),'spotify');
+ assert.equal(player.preferredMediaType(both,'audio'),'audio');
+ assert.equal(player.preferredMediaType({...both,videoUrl:''},'youtube'),'');
+});
+test('application provides manual platform choices and retains preference until changed',()=>{
+ const app=fs.readFileSync(require.resolve('../app.js'),'utf8'),html=fs.readFileSync(require.resolve('../index.html'),'utf8');
+ assert.match(app,/function chooseSequencePlatform\(type\)/);
+ assert.match(app,/function renderSequencePlatformOptions\(point\)/);
+ assert.doesNotMatch(app,/sequenceMediaPreference='auto'/);
+ assert.match(app,/id="play-youtube-point"/);
+ assert.match(app,/id="play-spotify-point"/);
+ assert.match(html,/id="sequence-platform-options"/);
+});
