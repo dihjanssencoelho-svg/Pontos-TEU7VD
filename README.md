@@ -38,6 +38,10 @@ O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consult
 
 Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra. A reprodução ocorre na janela do ponto; o usuário pode iniciar e controlar o vídeo ali.
 
+## Reprodução em sequência
+
+Pontos publicados no catálogo e com URL direta de áudio compatível podem ser reproduzidos em sequência. No detalhe de um ponto, use **Reproduzir em sequência** para começar uma fila pela categoria ou pela linha de trabalho; o seletor no player fixo permite trocar o tipo de fila. **Fila personalizada** adiciona o ponto à lista local deste navegador, mantendo a ordem escolhida. O player oferece reproduzir/pausar, anterior e próximo; ao terminar uma faixa, passa automaticamente ao próximo ponto com áudio. Itens sem áudio, removidos e rascunhos não entram nas filas. Em celulares, deslize horizontalmente sobre o título do player para avançar ou voltar. Links de YouTube e Spotify não são tratados como áudio direto. O fluxo não altera letras, revisões ou dados do Supabase.
+
 
 ## Grupo Ritualística
 
