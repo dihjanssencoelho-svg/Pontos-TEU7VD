@@ -1,6 +1,9 @@
 -- Record a required reason when a site administrator rejects a community suggestion.
 -- This migration changes only the suggestion workflow; it does not modify public.points.
 
+-- Remove the earlier two-argument overload so it cannot bypass the required reason.
+drop function if exists public.decide_point_suggestion(uuid, text);
+
 create or replace function public.decide_point_suggestion(
   p_suggestion_id uuid,
   p_decision text,
