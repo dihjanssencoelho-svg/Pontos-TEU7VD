@@ -75,7 +75,7 @@ test('legacy pending reviews are reanalyzed and can send refreshed suggestions o
   assert.match(app, /p_suggestions:pointReviewSuggestionCache\.get\(reviewId\)/);
   assert.match(html, /text-review\.js\?v=20261116-case-review-3/);
   assert.match(html, /app\.js\?v=20261118-review-history-2/);
-  assert.match(html, /sequence-player\.js\?v=20261118-youtube-mini-1/);
+  assert.match(html, /sequence-player\.js\?v=20261118-spotify-1/);
 });
 
 test('catalog writes use the review and deletion RPCs instead of direct point writes', () => {
