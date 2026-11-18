@@ -1,60 +1,12 @@
-(function (root, factory) {
-  const api = factory();
-  if (typeof module === 'object' && module.exports) module.exports = api;
-  if (root) root.PointSequencePlayer = api;
-})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
-  function hasPlayableAudio(point) {
-    const value = String(point?.audioUrl || point?.audio_url || '').trim();
-    if (!value) return false;
-    try {
-      const url = new URL(value);
-      return ['http:', 'https:'].includes(url.protocol) && !/(youtube\.com|youtu\.be|spotify\.com)/i.test(url.hostname);
-    } catch { return false; }
-  }
-
-  function youtubeVideoId(point) {
-    for (const value of [point?.videoUrl, point?.video_url, point?.source]) {
-      if (!value) continue;
-      try {
-        const url = new URL(String(value).trim());
-        const host = url.hostname.toLowerCase().replace(/^www\./, '');
-        let id = '';
-        if (host === 'youtu.be') id = url.pathname.split('/').filter(Boolean)[0] || '';
-        else if (['youtube.com', 'm.youtube.com', 'youtube-nocookie.com'].includes(host)) {
-          if (url.pathname === '/watch') id = url.searchParams.get('v') || '';
-          else if (['/embed/', '/shorts/', '/live/'].some(prefix => url.pathname.startsWith(prefix))) id = url.pathname.split('/')[2] || '';
-        }
-        if (/^[A-Za-z0-9_-]{11}$/.test(id)) return id;
-      } catch { /* Try the next registered media field. */ }
-    }
-    return '';
-  }
-
-  function hasPlayableMedia(point) {
-    return hasPlayableAudio(point) || !!youtubeVideoId(point);
-  }
-
-  function buildQueue(points, mode, selected, customIds = [], media = 'audio') {
-    const visible = (points || []).filter(point => point.isDeleted !== true && point.is_deleted !== true && !point.isDraft);
-    let scoped = visible;
-    if (mode === 'category') scoped = visible.filter(point => point.category === selected);
-    if (mode === 'line') scoped = visible.filter(point => point.group === selected || point.work_group === selected);
-    if (mode === 'all') scoped = visible;
-    if (mode === 'custom') {
-      const byId = new Map(visible.map(point => [point.id, point]));
-      scoped = customIds.map(id => byId.get(id)).filter(Boolean);
-    }
-    return scoped.filter(media === 'media' ? hasPlayableMedia : hasPlayableAudio);
-  }
-
-  function buildMediaQueue(points, mode, selected, customIds = []) {
-    return buildQueue(points, mode, selected, customIds, 'media');
-  }
-
-  function nextIndex(queue, currentIndex, direction = 1) {
-    const next = currentIndex + direction;
-    return next >= 0 && next < queue.length ? next : -1;
-  }
-
-  return { hasPlayableAudio, hasPlayableMedia, youtubeVideoId, buildQueue, buildMediaQueue, nextIndex };
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.PointSequencePlayer=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
+function hasPlayableAudio(point){const value=String(point?.audioUrl||point?.audio_url||'').trim();if(!value)return false;try{const url=new URL(value);return ['http:','https:'].includes(url.protocol)&&!/(youtube\.com|youtu\.be|spotify\.com)/i.test(url.hostname);}catch{return false;}}
+function spotifyTrackId(point){for(const value of [point?.spotifyUrl,point?.spotify_url]){if(!value)continue;try{const url=new URL(String(value).trim());if(url.hostname.toLowerCase().replace(/^www\./,'')!=='open.spotify.com')continue;const parts=url.pathname.split('/').filter(Boolean),i=parts.indexOf('track'),id=i>=0?parts[i+1]||'':'';if(/^[A-Za-z0-9]{22}$/.test(id))return id;}catch{}}return '';}
+function hasPlayableSpotify(point){return !!spotifyTrackId(point);}
+function youtubeVideoId(point){for(const value of [point?.videoUrl,point?.video_url,point?.source]){if(!value)continue;try{const url=new URL(String(value).trim()),host=url.hostname.toLowerCase().replace(/^www\./,'' );let id='';if(host==='youtu.be')id=url.pathname.split('/').filter(Boolean)[0]||'';else if(['youtube.com','m.youtube.com','youtube-nocookie.com'].includes(host)){if(url.pathname==='/watch')id=url.searchParams.get('v')||'';else if(['/embed/','/shorts/','/live/'].some(prefix=>url.pathname.startsWith(prefix)))id=url.pathname.split('/')[2]||'';}if(/^[A-Za-z0-9_-]{11}$/.test(id))return id;}catch{}}return '';}
+function hasPlayableMedia(point){return hasPlayableAudio(point)||hasPlayableSpotify(point)||!!youtubeVideoId(point);}
+function preferredMediaType(point,preference='auto'){const yt=!!youtubeVideoId(point),sp=hasPlayableSpotify(point),au=hasPlayableAudio(point);if(preference==='spotify'&&sp)return 'spotify';if(preference==='youtube'&&yt)return 'youtube';if(preference==='audio'&&au)return 'audio';if(yt)return 'youtube';if(sp)return 'spotify';if(au)return 'audio';return '';}
+function buildQueue(points,mode,selected,customIds=[],media='audio'){const visible=(points||[]).filter(p=>p.isDeleted!==true&&p.is_deleted!==true&&!p.isDraft);let scoped=visible;if(mode==='category')scoped=visible.filter(p=>p.category===selected);if(mode==='line')scoped=visible.filter(p=>p.group===selected||p.work_group===selected);if(mode==='all')scoped=visible;if(mode==='custom'){const byId=new Map(visible.map(p=>[p.id,p]));scoped=customIds.map(id=>byId.get(id)).filter(Boolean);}return scoped.filter(media==='media'?hasPlayableMedia:hasPlayableAudio);}
+function buildMediaQueue(points,mode,selected,customIds=[]){return buildQueue(points,mode,selected,customIds,'media');}
+function nextIndex(queue,currentIndex,direction=1){const next=currentIndex+direction;return next>=0&&next<queue.length?next:-1;}
+return {hasPlayableAudio,hasPlayableSpotify,spotifyTrackId,preferredMediaType,hasPlayableMedia,youtubeVideoId,buildQueue,buildMediaQueue,nextIndex};
 });
