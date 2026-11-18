@@ -33,7 +33,7 @@ test('previous and next stay within queue bounds', () => {
 test('YouTube links in either video or source fields are selectable media', () => {
   assert.equal(player.youtubeVideoId(points[5]), 'abcdefghijk');
   assert.equal(player.youtubeVideoId(points[6]), 'lmnopqrstuv');
-  assert.deepEqual(player.buildMediaQueue(points, 'category', 'Ogum').map(point => point.id), ['a', 'f']);
+  assert.deepEqual(player.buildMediaQueue(points, 'category', 'Ogum').map(point => point.id), ['a', 'f', 'h']);
   assert.deepEqual(player.buildMediaQueue(points, 'all').map(point => point.id), ['a', 'c', 'f', 'g', 'h']);
 });
 
@@ -56,7 +56,7 @@ test('catalog card opens its media detail and can separately start the bottom pl
   assert.match(app, /openPoint\(card\.dataset\.id,\{keepPlayerDock:true\}\)/);
   assert.match(app, /data-open-point="\$\{esc\(p\.id\)\}"/);
   assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===b\.dataset\.openPoint\)\)/);
-  assert.match(app, /function selectPointForPlayback\(point\)/);
+  assert.match(app, /function selectPointForPlayback\(point,preference='auto'\)/);
   assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
   assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);
   assert.match(app, /sequence-open-point.*showSequenceLyrics\(sequenceQueue\[sequenceIndex\]\)/);
