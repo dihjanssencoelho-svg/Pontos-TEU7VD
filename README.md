@@ -33,14 +33,14 @@ O app só libera edição se a sessão autenticada tiver `app_metadata.role = ad
 O código e os arquivos visuais permanecem no GitHub. Os dados editáveis ficam no Supabase para que o administrador possa atualizar o conteúdo pela página sem expor senha ou token de escrita no repositório. A lista inicial continua no `app.js` e serve de catálogo base.
 
 
-O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consultado como referência. Os pontos podem reproduzir áudio diretamente na página quando o administrador cadastra uma URL direta e compatível (MP3, OGG ou WAV); links de YouTube e Spotify não são reproduzidos pelo player.
+O catálogo do [TUEG](https://pontos-cantados.tueg.pt/) também pode ser consultado como referência. Áudio direto cadastrado em MP3, OGG ou WAV é reproduzido no player da página. Vídeos do YouTube podem ser exibidos no mini player ou na janela do ponto; links do Spotify ficam como referência.
 
 
-Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra. A reprodução ocorre na janela do ponto; o usuário pode iniciar e controlar o vídeo ali.
+Quando o administrador cadastra uma URL de vídeo do YouTube no ponto, a página incorpora o player oficial junto à letra e também pode reproduzi-lo no mini player do rodapé.
 
 ## Reprodução em sequência
 
-Pontos publicados no catálogo e com URL direta de áudio compatível podem ser reproduzidos em sequência. No detalhe de um ponto, use **Reproduzir em sequência** para começar uma fila pela categoria ou pela linha de trabalho; o seletor no player fixo permite trocar o tipo de fila. **Fila personalizada** adiciona o ponto à lista local deste navegador, mantendo a ordem escolhida. O player oferece reproduzir/pausar, anterior e próximo; ao terminar uma faixa, passa automaticamente ao próximo ponto com áudio. Itens sem áudio, removidos e rascunhos não entram nas filas. Em celulares, deslize horizontalmente sobre o título do player para avançar ou voltar. Links de YouTube e Spotify não são tratados como áudio direto. O fluxo não altera letras, revisões ou dados do Supabase.
+Ao escolher um card, a mídia vinculada abre no player fixo no rodapé. Vídeos do YouTube são exibidos em um mini player; áudios diretos usam os controles do player. A pergunta **Acompanhar a letra** abre a janela com o texto do ponto. O seletor oferece faixas disponíveis na categoria, linha de trabalho, fila personalizada ou em todos os pontos publicados. Ao terminar uma faixa de áudio ou vídeo, o player avança para a próxima faixa disponível. Itens removidos, rascunhos, pontos sem mídia e links do Spotify não entram nas filas. Em celulares, deslize horizontalmente sobre o título para avançar ou voltar. Esse fluxo não altera letras, revisões nem dados do Supabase.
 
 
 ## Grupo Ritualística

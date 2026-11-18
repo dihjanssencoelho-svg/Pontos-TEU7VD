@@ -57,12 +57,14 @@
 
   <section id="sequence-player" class="sequence-player" aria-label="Reprodução em sequência" hidden>
     <div class="sequence-track" id="sequence-track"><strong id="sequence-title">Nenhum ponto selecionado</strong><small id="sequence-position"></small></div>
+    <div class="sequence-video-frame" id="sequence-video-frame" hidden><div id="sequence-youtube-host"></div></div>
     <select id="sequence-track-select" aria-label="Selecionar ponto para reproduzir" hidden></select>
     <label class="sequence-scope-label" for="sequence-scope">Fila</label>
-    <select id="sequence-scope" aria-label="Tipo de fila"><option value="category">Categoria</option><option value="line">Linha</option><option value="custom">Personalizada</option></select>
+    <select id="sequence-scope" aria-label="Tipo de fila"><option value="category">Categoria</option><option value="line">Linha</option><option value="all">Todos os pontos</option><option value="custom">Personalizada</option></select>
     <select id="sequence-filter" aria-label="Categoria ou linha da fila"></select>
     <div class="sequence-controls"><button id="sequence-previous" type="button" aria-label="Ponto anterior">⏮</button><button id="sequence-toggle" type="button" aria-label="Reproduzir">▶</button><button id="sequence-next" type="button" aria-label="Próximo ponto">⏭</button></div>
     <audio id="sequence-audio" preload="metadata"></audio>
+    <div id="sequence-prompt" class="sequence-prompt" hidden><span>Quer abrir a letra para acompanhar o áudio?</span><button id="sequence-open-point" type="button">Acompanhar a letra</button><button id="sequence-dismiss-prompt" type="button" aria-label="Agora não">Agora não</button></div>
   </section>
 
   <dialog id="point-dialog" class="point-dialog">
@@ -126,8 +128,8 @@
   <script src="supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="sequence-player.js?v=20261117-sequence-1"></script>
+  <script src="sequence-player.js?v=20261118-youtube-mini-1"></script>
   <script src="text-review.js?v=20261116-case-review-3"></script>
-  <script src="app.js?v=20261117-sequence-2"></script>
+  <script src="app.js?v=20261118-youtube-mini-1"></script>
 </body>
 </html>
