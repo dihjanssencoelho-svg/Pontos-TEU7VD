@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261118-suggest-point-3">
+  <link rel="stylesheet" href="styles.css?v=20261118-spotify-player-1">
 </head>
 <body>
   <header class="topbar">
@@ -92,6 +92,7 @@
   <section id="sequence-player" class="sequence-player" aria-label="Reprodução em sequência" hidden>
     <div class="sequence-track" id="sequence-track"><strong id="sequence-title">Nenhum ponto selecionado</strong><small id="sequence-position"></small></div>
     <div class="sequence-video-frame" id="sequence-video-frame" hidden><div id="sequence-youtube-host"></div></div>
+    <div class="sequence-spotify-frame" id="sequence-spotify-frame" hidden><div id="sequence-spotify-host"></div></div>
     <select id="sequence-track-select" aria-label="Selecionar ponto para reproduzir" hidden></select>
     <label class="sequence-scope-label" for="sequence-scope">Fila</label>
     <select id="sequence-scope" aria-label="Tipo de fila"><option value="category">Categoria</option><option value="line">Linha</option><option value="all">Todos os pontos</option><option value="custom">Personalizada</option></select>
@@ -185,9 +186,9 @@
   <script src="supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
-  <script src="sequence-player.js?v=20261118-youtube-mini-1"></script>
+  <script src="sequence-player.js?v=20261118-spotify-1"></script>
   <script src="text-review.js?v=20261116-case-review-3"></script>
-  <script src="app.js?v=20261118-rejection-reason-1"></script>
+  <script src="app.js?v=20261118-review-history-2&spotify=1"></script>
 </body>
 </html>
 
