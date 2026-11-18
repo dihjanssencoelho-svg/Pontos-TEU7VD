@@ -140,6 +140,7 @@
         <div class="point-history-tabs" role="tablist" aria-label="Revisão e histórico de pontos">
           <button id="point-review-tab" class="point-history-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="point-review-panel">Revisão pendente</button>
           <button id="point-history-tab" class="point-history-tab" type="button" role="tab" aria-selected="false" aria-controls="point-history-panel" tabindex="-1">Histórico</button>
+          <button id="spotify-review-tab" class="point-history-tab" type="button" role="tab" aria-selected="false" aria-controls="spotify-review-panel" tabindex="-1">Spotify</button>
         </div>
         <section class="point-review-queue" aria-labelledby="point-review-heading">
           <div id="point-review-panel" role="tabpanel" aria-labelledby="point-review-tab">
@@ -153,6 +154,12 @@
             <p class="import-help">Pontos aprovados, editados e excluídos. O registro preserva o conteúdo antes e depois de cada alteração.</p>
             <button class="action-link" id="refresh-point-history" type="button">Atualizar histórico</button>
             <div id="point-history-list" class="point-review-list" aria-live="polite"></div>
+          </div>
+          <div id="spotify-review-panel" role="tabpanel" aria-labelledby="spotify-review-tab" hidden>
+            <h3>Correspondências do Spotify</h3>
+            <p class="import-help">Somente faixas com título idêntico ao ponto cadastrado entram nesta fila. Confira artista e gravação antes de aprovar. O link só será gravado no catálogo após sua aprovação.</p>
+            <button class="action-link" id="refresh-spotify-reviews" type="button">Atualizar correspondências</button>
+            <div id="spotify-review-list" class="point-review-list" aria-live="polite"></div>
           </div>
         </section>
         <section class="point-suggestions-inbox" aria-labelledby="point-suggestions-heading">
