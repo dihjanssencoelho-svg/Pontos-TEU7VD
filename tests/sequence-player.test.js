@@ -11,6 +11,7 @@ const points = [
   { id: 'e', title: 'Removido', category: 'Ogum', group: 'Orixás', audioUrl: 'https://cdn.example/e.mp3', is_deleted: true },
   { id: 'f', title: 'Vídeo', category: 'Ogum', group: 'Orixás', videoUrl: 'https://youtube.com/watch?v=abcdefghijk' },
   { id: 'g', title: 'Vídeo pela fonte', category: 'Oxalá', group: 'Orixás', videoUrl: '', source: 'https://youtu.be/lmnopqrstuv' },
+  { id: 'h', title: 'Spotify', category: 'Ogum', group: 'Orixás', spotifyUrl: 'https://open.spotify.com/track/5LNAFXRwufCwNphMKiix3v' },
 ];
 
 test('category and line queues include only published points with direct audio', () => {
@@ -33,7 +34,7 @@ test('YouTube links in either video or source fields are selectable media', () =
   assert.equal(player.youtubeVideoId(points[5]), 'abcdefghijk');
   assert.equal(player.youtubeVideoId(points[6]), 'lmnopqrstuv');
   assert.deepEqual(player.buildMediaQueue(points, 'category', 'Ogum').map(point => point.id), ['a', 'f']);
-  assert.deepEqual(player.buildMediaQueue(points, 'all').map(point => point.id), ['a', 'c', 'f', 'g']);
+  assert.deepEqual(player.buildMediaQueue(points, 'all').map(point => point.id), ['a', 'c', 'f', 'g', 'h']);
 });
 
 test('custom media queue keeps order and omits drafts, deleted points and points without media', () => {
@@ -64,3 +65,6 @@ test('catalog card opens its media detail and can separately start the bottom pl
   assert.match(html, /id="sequence-lyrics-panel"/);
   assert.match(html, /option value="all">Todos os pontos/);
 });
+
+test('Spotify track links are parsed and included in the shared media queue',()=>{assert.equal(player.spotifyTrackId(points[7]),'5LNAFXRwufCwNphMKiix3v');assert.equal(player.hasPlayableSpotify(points[7]),true);assert.equal(player.hasPlayableAudio(points[7]),false);assert.equal(player.preferredMediaType(points[7],'spotify'),'spotify');assert.equal(player.preferredMediaType(points[7],'youtube'),'spotify');assert.deepEqual(player.buildMediaQueue(points,'category','Ogum').map(p=>p.id),['a','f','h']);});
+test('Spotify parser rejects album, playlist and unrelated URLs',()=>{assert.equal(player.spotifyTrackId({spotifyUrl:'https://open.spotify.com/album/5LNAFXRwufCwNphMKiix3v'}),'');assert.equal(player.spotifyTrackId({spotifyUrl:'https://open.spotify.com/playlist/5LNAFXRwCwNphMKiix3v'}),'');assert.equal(player.spotifyTrackId({spotifyUrl:'https://example.com/track/5LNAFXRwufCwNphMKiix3v'}),'');});
