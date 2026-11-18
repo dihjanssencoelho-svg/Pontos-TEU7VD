@@ -46,13 +46,15 @@ test('the point dialog contains a selectable track control wired to playback', (
   assert.match(html, /id="sequence-track-select"[^>]*aria-label="Selecionar ponto para reproduzir"/);
   assert.match(app, /function playSelectedSequencePoint\(id\)/);
   assert.match(app, /#sequence-track-select'\)\.addEventListener\('change',event=>playSelectedSequencePoint/);
-  assert.match(app, /prepareSequenceForPoint\(p\);const sequencePlayer=.*appendChild\(sequencePlayer\);dialog\.showModal\(\)/);
+  assert.match(app, /if\(!keepPlayerDock\)\{prepareSequenceForPoint\(p\);const sequencePlayer=.*appendChild\(sequencePlayer\);\}dialog\.showModal\(\)/);
 });
 
-test('catalog card starts the bottom player and offers the lyrics dialog', () => {
+test('catalog card opens its media detail and can separately start the bottom player', () => {
   const app = fs.readFileSync(require.resolve('../app.js'), 'utf8');
   const html = fs.readFileSync(require.resolve('../index.html'), 'utf8');
-  assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===card\.dataset\.id\)\)/);
+  assert.match(app, /openPoint\(card\.dataset\.id,\{keepPlayerDock:true\}\)/);
+  assert.match(app, /data-open-point="\$\{esc\(p\.id\)\}"/);
+  assert.match(app, /selectPointForPlayback\(points\.find\(point=>point\.id===b\.dataset\.openPoint\)\)/);
   assert.match(app, /function selectPointForPlayback\(point\)/);
   assert.match(app, /trackSelect\.hidden=sequenceQueue\.length<1/);
   assert.match(app, /function loadYoutubeMiniVideo\(videoId\)/);

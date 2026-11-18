@@ -74,19 +74,38 @@ test('legacy pending reviews are reanalyzed and can send refreshed suggestions o
   assert.match(app, /rpc\('apply_point_text_review_suggestions'/);
   assert.match(app, /p_suggestions:pointReviewSuggestionCache\.get\(reviewId\)/);
   assert.match(html, /text-review\.js\?v=20261116-case-review-3/);
-  assert.match(html, /app\.js\?v=20261118-player-layout-2/);
+  assert.match(html, /app\.js\?v=20261118-review-history-2/);
   assert.match(html, /sequence-player\.js\?v=20261118-youtube-mini-1/);
 });
 
 test('catalog writes use the review and deletion RPCs instead of direct point writes', () => {
   const app = fs.readFileSync(path.join(__dirname, '../app.js'), 'utf8');
+  const html = fs.readFileSync(path.join(__dirname, '../index.html'), 'utf8');
   assert.match(app, /rpc\('submit_point_text_review'/);
   assert.match(app, /rpc\('decide_point_text_review'/);
   assert.match(app, /Aplicar capitalização e aprovar/);
+  assert.match(app, /decidePointReview\(button\.dataset\.reviewId,button\.dataset\.reviewAction,button\.dataset\.applySuggestions==='true'\)/);
+  assert.match(app, /decidePointReview\(reviewId,decision,applySuggestions=false\)/);
+  assert.match(app, /apply_point_text_review_suggestions/);
+  assert.match(app, /\.eq\('status','pending'\)/);
+  assert.match(html, /id="point-history-tab"/);
+  assert.match(app, /function renderPointCatalogHistory\(events\)/);
   assert.match(app, /approved_content/);
   assert.match(app, /rpc\('update_point_metadata'/);
   assert.match(app, /rpc\('soft_delete_point'/);
   assert.doesNotMatch(app, /from\(['"]points['"]\)\.(?:insert|update|upsert|delete)\(/);
+});
+
+test('catalog history migration preserves points and captures insert, edit and delete events', () => {
+  const sql = fs.readFileSync(path.join(__dirname, '../supabase/migrations/20261118145523_add_point_catalog_history.sql'), 'utf8');
+  assert.match(sql, /create table public\.point_catalog_history/);
+  assert.match(sql, /where status = 'approved'/);
+  assert.match(sql, /where is_deleted = true/);
+  assert.match(sql, /after insert or update or delete on public\.points/i);
+  assert.match(sql, /v_operation := case when new\.is_deleted and not old\.is_deleted then 'delete' else 'update' end/);
+  assert.doesNotMatch(sql, /update\s+public\.points\b/i);
+  assert.doesNotMatch(sql, /delete\s+from\s+public\.points\b/i);
+  assert.doesNotMatch(sql, /backup_20261113/i);
 });
 
 test('approval refuses stale text and never reactivates an inactive point', () => {

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261118-player-layout-2">
+  <link rel="stylesheet" href="styles.css?v=20261118-review-history-2">
 </head>
 <body>
   <header class="topbar">
@@ -101,11 +101,23 @@
         </section>
         <label class="lyrics-label" for="admin-point-select">Escolha um ponto para editar</label>
         <select id="admin-point-select" class="admin-select"></select>
+        <div class="point-history-tabs" role="tablist" aria-label="Revisão e histórico de pontos">
+          <button id="point-review-tab" class="point-history-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="point-review-panel">Revisão pendente</button>
+          <button id="point-history-tab" class="point-history-tab" type="button" role="tab" aria-selected="false" aria-controls="point-history-panel" tabindex="-1">Histórico</button>
+        </div>
         <section class="point-review-queue" aria-labelledby="point-review-heading">
-          <h3 id="point-review-heading">Revisão de textos</h3>
-          <p class="import-help">Novos pontos e alterações de título, complemento ou letra aguardam aprovação. Metadados não textuais são atualizados sem mexer no texto aprovado.</p>
-          <button class="action-link" id="refresh-point-reviews" type="button">Atualizar revisões</button>
-          <div id="point-review-list" class="point-review-list" aria-live="polite"></div>
+          <div id="point-review-panel" role="tabpanel" aria-labelledby="point-review-tab">
+            <h3 id="point-review-heading">Revisão de textos</h3>
+            <p class="import-help">Novos pontos e alterações de título, complemento ou letra aguardam aprovação. Metadados não textuais são atualizados sem mexer no texto aprovado.</p>
+            <button class="action-link" id="refresh-point-reviews" type="button">Atualizar pendentes</button>
+            <div id="point-review-list" class="point-review-list" aria-live="polite"></div>
+          </div>
+          <div id="point-history-panel" role="tabpanel" aria-labelledby="point-history-tab" hidden>
+            <h3>Histórico do catálogo</h3>
+            <p class="import-help">Pontos aprovados, editados e excluídos. O registro preserva o conteúdo antes e depois de cada alteração.</p>
+            <button class="action-link" id="refresh-point-history" type="button">Atualizar histórico</button>
+            <div id="point-history-list" class="point-review-list" aria-live="polite"></div>
+          </div>
         </section>
         <div class="dialog-actions">
           <button class="save-button" id="admin-edit-point" type="button">Editar ponto</button>
@@ -135,6 +147,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="sequence-player.js?v=20261118-youtube-mini-1"></script>
   <script src="text-review.js?v=20261116-case-review-3"></script>
-  <script src="app.js?v=20261118-player-layout-2"></script>
+  <script src="app.js?v=20261118-review-history-2"></script>
 </body>
 </html>
