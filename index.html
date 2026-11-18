@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=20261118-review-history-2">
+  <link rel="stylesheet" href="styles.css?v=20261118-suggest-point-1">
 </head>
 <body>
   <header class="topbar">
@@ -47,9 +47,42 @@
         <section class="results-pane" aria-label="Pontos encontrados">
           <div class="results-bar"><span id="results-label">Todos os pontos</span><span id="results-count"></span></div>
           <div id="point-grid" class="point-grid"></div>
-          <div id="empty-state" class="empty-state" hidden><span>⌕</span><h3>Nenhum ponto encontrado</h3><p>Tente outra busca ou escolha uma categoria diferente.</p></div>
+          <div id="empty-state" class="empty-state" hidden><span>⌕</span><h3>Nenhum ponto encontrado</h3><p>Tente outra busca ou <a href="#suggest-point-heading">indique seu ponto</a>.</p></div>
         </section>
       </div>
+    </section>
+    <section class="suggest-point-shell" aria-labelledby="suggest-point-heading">
+      <div class="suggest-point-intro">
+        <p class="section-kicker">AJUDE A AMPLIAR O CADERNO</p>
+        <h2 id="suggest-point-heading">Indique seu Ponto</h2>
+        <p>Não encontrou um ponto na listagem? Envie a letra e, se quiser, compartilhe um vídeo ou uma gravação sua cantando.</p>
+      </div>
+      <form id="point-suggestion-form" class="point-suggestion-form">
+        <label for="suggestion-name">Nome do Ponto <span>(opcional)</span></label>
+        <input id="suggestion-name" name="name" type="text" maxlength="120" placeholder="Como este ponto é conhecido?">
+        <div class="suggestion-form-row">
+          <div><label for="suggestion-group">Grupo</label>
+            <select id="suggestion-group" name="work_group" required>
+              <option value="Orixás">Orixás</option>
+              <option value="Linhas de trabalho">Linha de trabalho</option>
+              <option value="Ritualística">Ritualística</option>
+            </select>
+          </div>
+          <div><label for="suggestion-category">Orixá ou Linha de trabalho</label>
+            <select id="suggestion-category" name="category" required></select>
+          </div>
+        </div>
+        <label for="suggestion-lyrics">Letra do Ponto</label>
+        <textarea id="suggestion-lyrics" name="lyrics" rows="7" maxlength="15000" required placeholder="Escreva a letra do ponto"></textarea>
+        <label for="suggestion-youtube">Link do vídeo no YouTube <span>(opcional)</span></label>
+        <input id="suggestion-youtube" name="youtube_url" type="url" inputmode="url" placeholder="https://youtu.be/...">
+        <label for="suggestion-voice">Gravação da sua voz cantando <span>(opcional · até 15 MB)</span></label>
+        <input id="suggestion-voice" name="voice" type="file" accept="audio/mpeg,audio/mp4,audio/x-m4a,audio/wav,audio/x-wav,audio/ogg,audio/webm,audio/aac,.mp3,.m4a,.wav,.ogg,.webm,.aac">
+        <small class="suggestion-privacy">A indicação e a gravação serão acessíveis somente à equipe do templo para avaliação. O envio não publica o ponto automaticamente.</small>
+        <label class="suggestion-honeypot" aria-hidden="true">Deixe este campo vazio<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+        <button id="suggestion-submit" class="save-button" type="submit">Enviar indicação</button>
+        <p id="suggestion-feedback" class="suggestion-feedback" role="status" aria-live="polite"></p>
+      </form>
     </section>
     <aside class="note"><span class="note-icon">✳</span><p><b>Referências para estudo.</b> As versões, letras e melodias podem variar entre terreiros. Confirme cada ponto com a orientação do TU7VD antes de incluí-lo na lista da casa.</p></aside>
   </main>
@@ -119,6 +152,12 @@
             <div id="point-history-list" class="point-review-list" aria-live="polite"></div>
           </div>
         </section>
+        <section class="point-suggestions-inbox" aria-labelledby="point-suggestions-heading">
+          <h3 id="point-suggestions-heading">Indicações recebidas</h3>
+          <p class="import-help">Sugestões enviadas pelos visitantes. Elas não entram no catálogo automaticamente.</p>
+          <button class="action-link" id="refresh-point-suggestions" type="button">Atualizar indicações</button>
+          <div id="point-suggestions-list" class="point-review-list" aria-live="polite"></div>
+        </section>
         <div class="dialog-actions">
           <button class="save-button" id="admin-edit-point" type="button">Editar ponto</button>
           <button class="action-link" id="admin-delete-point" type="button">Excluir ponto selecionado</button>
@@ -147,6 +186,6 @@
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
   <script src="sequence-player.js?v=20261118-youtube-mini-1"></script>
   <script src="text-review.js?v=20261116-case-review-3"></script>
-  <script src="app.js?v=20261118-review-history-2"></script>
+  <script src="app.js?v=20261118-suggest-point-1"></script>
 </body>
 </html>
